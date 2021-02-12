@@ -55,6 +55,7 @@ class Bot(discord.Client):
         )
 
 def get_hst(getAll=False, force=False, update=False):
+    # TODO make this code more clear
     if force and update:
         try : data = json.loads(open("data/users.json").read())
         except FileNotFoundError: data = []
