@@ -1,0 +1,11 @@
+# random python cache
+__pycache__/
+
+# database
+*.sqlite3
+
+# vscode settings
+.vscode/
+
+#temporary things
+temp/
