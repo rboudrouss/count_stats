@@ -1,3 +1,8 @@
 # must stay secrect
 config.json
-secret_things.py
+
+#a hack that i must fix on day
+com/
+
+#data do not see
+data/
