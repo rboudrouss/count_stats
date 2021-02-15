@@ -1,6 +1,6 @@
 # from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
-from .getData import *
+from utils.getData import *
 
 # Create your views here.
 def index(request):
