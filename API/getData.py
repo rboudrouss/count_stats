@@ -47,7 +47,8 @@ def get_msgs_date(mind,maxd):
             min_=True
         if min_ and max_ :
             break
-            
+    if min_ and not max_: max_index = index+1 #HACK kinda
+
     return history[min_index:max_index]
 
 def get_user_date(mind,maxd,id):
