@@ -40,7 +40,7 @@ def msg_info(request):
     ), safe=False)
 
 def messages(request):
-    print(request.GET['info'])
+    print(request.GET.get("maxd",False))
     return JsonResponse(get_messages(
         mind=request.GET.get("mind",False),
         maxd=request.GET.get("maxd",False),
