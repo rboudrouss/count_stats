@@ -1,7 +1,5 @@
 import discord
-from time import sleep
 import json
-from typing import List, Dict
 
 
 CONFIG = json.loads(open("../config.json",'r').read())
