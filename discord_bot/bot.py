@@ -46,7 +46,6 @@ class Bot(discord.Client):
                 {
                     user.id : {
                         "avatar_url":   str(user.avatar_url),
-                        "color":        user.color.value,
                         "name":         user.display_name,
                         "discriminator":user.discriminator,
                         "id":           user.id,
