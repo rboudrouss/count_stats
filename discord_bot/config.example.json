@@ -1,0 +1,8 @@
+{
+  "token": "Your Token Here",
+  "channelid": 123456789,
+  "testers": [
+      123456789,
+      123456789
+  ]
+}
