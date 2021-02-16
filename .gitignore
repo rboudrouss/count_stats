@@ -7,9 +7,6 @@ temp/
 # data
 data/
 
-# HACK must fix
-com/
-
 # config
 config.json
 
