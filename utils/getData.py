@@ -1,10 +1,12 @@
 import json
 import datetime
+from .constants import HISTORY_FILE, USERS_FILE
 
 
 # message
 def get_history():
-    return json.loads(open("data/history.json").read())
+    if HISTORY_FILE.exists() : return json.loads(HISTORY_FILE.read_text())
+    return []
 
 def get_user_msgs(id=None):
     history = get_history()
@@ -14,7 +16,7 @@ def get_user_msgs(id=None):
 
 def get_msgs_date(mind=None,maxd=None):
     """
-    max min must respect format : <Y>-<M>-<?D>-<?H>-<?S>-<?MS>
+    max min must respect format : <Y>-<M>-<D>-<?H>-<?S>-<?MS>
     """
     history = get_history()
 
@@ -59,9 +61,6 @@ def get_user_date(mind=None,maxd=None,id=None):
 def get_msg_info(mind=None,maxd=None,id=None,infos=None):
     history = get_user_date(mind, maxd, id)
     if not infos: return history
-    # if type(infos) is list and len(infos)>1: return [{info:msg.get(info, {"Error":"404, Not Found"}) for info in infos} for msg in history]
-    # if type(infos) is list :
-        # infos = infos[0]
     return [msg.get(infos) for msg in history]
 
 def get_messages(mind,maxd,id,infos): return get_msg_info(mind, maxd, id, infos)
@@ -70,7 +69,8 @@ def get_messages(mind,maxd,id,infos): return get_msg_info(mind, maxd, id, infos)
 def get_users(id=None): return get_user_data(id)
 
 def get_users_data():
-    return json.loads(open("data/users.json").read())
+    if USERS_FILE.exists(): return json.loads(USERS_FILE.read_text())
+    return {}
 
 def get_user_data(id=None):
     users = get_users()
