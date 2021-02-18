@@ -6,6 +6,7 @@ sys.path.insert(0,'../')
 
 from utils.writeData import write_history, append_users
 from utils.treatment import users_not_in_data
+from utils.constants import CHANNEL_ID
 
 CONFIG = json.loads(open("./config.json",'r').read())
 
@@ -27,7 +28,7 @@ class Bot(discord.Client):
         if not self.stayOn: await self.logout()
     
     async def get_msgs(self, getAll=False):
-        channel = self.get_channel(CONFIG["channelid"])
+        channel = self.get_channel(CHANNEL_ID)
         msg_hst = channel.history(limit=(None if getAll else 200))#.flatten()
         
         # get all messages

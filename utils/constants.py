@@ -1,11 +1,9 @@
-from pathlib import Path
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+TESTERS = [
+    690869031531446313,
+]
 
-DATA_DIR = BASE_DIR/"data"
+CHANNEL_ID = 557592500722728962
 
-HISTORY_FILE = DATA_DIR/"history.json"
-
-USERS_FILE = DATA_DIR/"users.json"
-
-COUNT_FILE = DATA_DIR/"count.json"
+# in seconds
+DELAY_COUNT_UPDATE = 300

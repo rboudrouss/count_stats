@@ -1,5 +1,5 @@
 import json
-from .constants import USERS_FILE, HISTORY_FILE, COUNT_FILE
+from .filePaths import USERS_FILE, HISTORY_FILE, COUNT_FILE
 from .getData import get_history, get_users_data
 
 def create_file(file_path):
