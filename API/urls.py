@@ -15,4 +15,6 @@ urlpatterns = [
     path('user/users',users_data, name='users'),
     path('user/user', user_data, name='user'),
     path('user', users, name="user"),
+    # count data
+    path('count', count, name="count"),
 ]

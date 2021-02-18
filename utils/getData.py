@@ -1,6 +1,6 @@
 import json
 import datetime
-from .constants import HISTORY_FILE, USERS_FILE
+from .constants import HISTORY_FILE, USERS_FILE, COUNT_FILE
 
 
 # message
@@ -34,7 +34,7 @@ def get_msgs_date(mind=None,maxd=None):
     else:
         mind = datetime.datetime(*map(int, mind.split('-')))
         maxd = datetime.datetime(*map(int, maxd.split('-')))
-    if mind>maxd : mind,maxd = (maxd,mind)
+    if mind>maxd : mind,maxd = (maxd,mind) # HACK
 
     max_index = 0; max_ = False
     min_index = 0; min_ = False
@@ -73,6 +73,16 @@ def get_users_data():
     return {}
 
 def get_user_data(id=None):
-    users = get_users()
+    users = get_users_data()
     if not id : return users
     return users.get(str(id),{"Error":"404 User not found"})
+
+def get_all_users(fast=True):
+    if fast: return [user.id for user in get_user_data()]
+    return list({msg["author_id"] for msg in get_history()})
+
+# Classement
+
+def get_count():
+    if COUNT_FILE.exists(): return json.loads(COUNT_FILE.read_text())
+    return {}

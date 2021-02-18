@@ -7,3 +7,5 @@ DATA_DIR = BASE_DIR/"data"
 HISTORY_FILE = DATA_DIR/"history.json"
 
 USERS_FILE = DATA_DIR/"users.json"
+
+COUNT_FILE = DATA_DIR/"count.json"

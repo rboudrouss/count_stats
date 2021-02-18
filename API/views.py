@@ -1,6 +1,10 @@
 # from django.shortcuts import render
+from utils.treatment import update_count
 from django.http import HttpResponse, JsonResponse
-from utils.getData import *
+
+from utils.getData import get_history, get_user_msgs, get_msgs_date, \
+    get_user_date, get_messages, get_user_data, get_users_data, get_count, \
+    get_users
 
 # Create your views here.
 def index(request):
@@ -40,7 +44,7 @@ def msg_info(request):
     ), safe=False)
 
 def messages(request):
-    print(request.GET.get("maxd",False))
+    # TODO update this one
     return JsonResponse(get_messages(
         mind=request.GET.get("mind",False),
         maxd=request.GET.get("maxd",False),
@@ -50,10 +54,16 @@ def messages(request):
 
 # Users
 def users(request):
-    return get_users(id=request.GET.get("id",False))
+    # TODO update this one
+    return JsonResponse(get_users(id=request.GET.get("id",False)))
 
 def users_data(request):
     return JsonResponse(get_users_data())
 
 def user_data(request):
     return JsonResponse(get_user_data(id=request.GET.get("id",False)))
+
+# Count
+def count(request):
+    update_count()
+    return JsonResponse(get_count())
