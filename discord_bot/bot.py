@@ -42,13 +42,13 @@ class Bot(discord.Client):
     
     async def get_users(self, users):
         print("users not in data: ", users)
-        dUsers = [await self.fetch_user(user) for user in users]
+        dUsers = [await self.fetch_user(int(user)) for user in users]
         append_users({
             user.id : {
                 "avatar_url":   str(user.avatar_url),
                 "name":         user.display_name,
                 "discriminator":user.discriminator,
-                "id":           user.id,
+                "id":           str(user.id),
             } for user in dUsers 
         })
 
