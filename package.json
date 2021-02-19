@@ -1,6 +1,10 @@
 {
   "name": "count_stats",
-  "version": "0.1.0",
+  "version": "0.2.0",
+  "main": "frontend/",
+  "repository": "https://github.com/rboudrouss/count_stats.git",
+  "author": "rboudrouss <r.boudrouss@gmail.com>",
+  "license": "MIT",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.3",
