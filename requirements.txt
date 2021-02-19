@@ -4,3 +4,4 @@ discord==1.0.1
 # >.>?
 gunicorn==20.0.4
 whitenoise==3.3.1
+# trying some random things with heroku
