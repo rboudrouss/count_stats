@@ -1,10 +1,6 @@
 {
   "name": "count_stats",
-  "version": "0.2.0",
-  "main": "frontend/",
-  "repository": "https://github.com/rboudrouss/count_stats.git",
-  "author": "rboudrouss <r.boudrouss@gmail.com>",
-  "license": "MIT",
+  "version": "0.1.0",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.3",
@@ -29,8 +25,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "postinstall": "yarn build"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
@@ -49,9 +44,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "engines": {
-    "node":"15.8.0",
-    "yarn":"1.22.5"
   }
 }

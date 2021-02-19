@@ -5,36 +5,10 @@
 temp/
 
 # data
-/data/
+data/
 
 # config
 config.json
-
-# ------------ REACT IGNORES ------------
-
-# dependencies
-/node_modules
-/.pnp
-.pnp.js
-
-# testing
-/coverage
-
-# production
-/build
-
-# misc
-.DS_Store
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# ---------- DJANGO IGNORES --------
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -145,4 +119,3 @@ media/
 *.pyc
 *.db
 *.pid
-node_modules

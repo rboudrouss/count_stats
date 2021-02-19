@@ -26,10 +26,7 @@ SECRET_KEY = '6zvwt4qs^jk5m=&q*z_k018ue_vr+)$c7(s%(@)8hj&@^tqs&i'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    'count-stats.heroku-app.com',
-    'count-stats.rboud.ml'
-]
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -60,7 +57,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            BASE_DIR/"build",
+            BASE_DIR/"frontend/build",
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -125,10 +122,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR/'staticfiles'
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
-
 
 STATICFILES_DIRS = [
-    BASE_DIR/"build/static",
+    BASE_DIR/"frontend/build/static",
 ]
