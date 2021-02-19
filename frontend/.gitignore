@@ -1,7 +1,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # temporary hack, i'll lick the API and the website later
-api/data/
+# api/data/
 
 # dependencies
 /node_modules
