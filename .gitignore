@@ -5,7 +5,7 @@
 temp/
 
 # data
-data/
+/data/
 
 # config
 config.json

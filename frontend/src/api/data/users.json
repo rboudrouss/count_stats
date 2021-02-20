@@ -1,0 +1,26 @@
+{
+  "111111111111111111": {
+    "avatar_url": "https://cdn.discordapp.com/avatars/690869031531446313/a_b1f3cdaa8ed2558a6aa1cebd5d6f8957.gif?size=1024",
+    "name": "fromage",
+    "discriminator": "6969",
+    "id": 111111111111111111
+  },
+  "222222222222222222": {
+    "avatar_url": "https://cdn.discordapp.com/avatars/690869031531446313/a_b1f3cdaa8ed2558a6aa1cebd5d6f8957.gif?size=1024",
+    "name": "Oui",
+    "discriminator": "0420",
+    "id": 222222222222222222
+  },
+  "333333333333333333": {
+    "avatar_url": "https://cdn.discordapp.com/avatars/690869031531446313/a_b1f3cdaa8ed2558a6aa1cebd5d6f8957.gif?size=1024",
+    "name": "rboud-sensei \u30c4",
+    "discriminator": "1207",
+    "id": 333333333333333333
+  },
+  "444444444444444444": {
+    "avatar_url": "https://cdn.discordapp.com/avatars/690869031531446313/a_b1f3cdaa8ed2558a6aa1cebd5d6f8957.gif?size=1024",
+    "name": "Non",
+    "discriminator": "1111",
+    "id": 444444444444444444
+  }
+}
