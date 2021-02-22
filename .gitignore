@@ -5,10 +5,13 @@
 temp/
 
 # data
-/data/
+# data/
 
 # config
 config.json
+
+# static root
+/staticroot/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -21,7 +24,7 @@ __pycache__/
 # Distribution / packaging
 .Python
 env/
-build/
+# build/
 develop-eggs/
 dist/
 downloads/
