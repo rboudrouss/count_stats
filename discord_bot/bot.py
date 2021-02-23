@@ -20,6 +20,7 @@ class Bot(discord.Client):
 
     async def on_ready(self):
         print('bot on !')
+        print(os.getcwd())
 
         if self.getMsg : await self.get_msgs(self.getAll)
         self.nUsers = users_not_in_data()
@@ -58,4 +59,4 @@ def run_bot(getAll = False, stayOn = True):
     Bot(getAll=getAll, stayOn=stayOn).run(TOKEN)
 
 if __name__ == "__main__":
-    run_bot(getAll = False, stayOn = True)
+    run_bot(getAll = False, stayOn = False)
