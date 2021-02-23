@@ -1,6 +1,6 @@
 import discord
-import json
 import sys
+import os
 
 sys.path.insert(0,'../')
 
@@ -8,7 +8,7 @@ from utils.writeData import write_history, append_users
 from utils.treatment import users_not_in_data
 from utils.constants import CHANNEL_ID
 
-CONFIG = json.loads(open("./config.json",'r').read())
+TOKEN = os.environ["TOKEN"] if os.environ.get("TOKEN",None) else open("token",'r').read()
 
 class Bot(discord.Client):
     def __init__(self, getMsg=True, getAll=False, stayOn=False, *args, **kwargs):
@@ -55,7 +55,7 @@ class Bot(discord.Client):
 
 
 def run_bot(getAll = False, stayOn = True):
-    Bot(getAll=getAll, stayOn=stayOn).run(CONFIG["token"])
+    Bot(getAll=getAll, stayOn=stayOn).run(TOKEN)
 
 if __name__ == "__main__":
     run_bot(getAll = False, stayOn = False)
