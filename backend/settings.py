@@ -28,6 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     "count-stats.herokuapp.com",
+    "localhost",
     "127.0.0.1",
 ]
 
