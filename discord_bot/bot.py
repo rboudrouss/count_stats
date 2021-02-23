@@ -58,4 +58,4 @@ def run_bot(getAll = False, stayOn = True):
     Bot(getAll=getAll, stayOn=stayOn).run(TOKEN)
 
 if __name__ == "__main__":
-    run_bot(getAll = False, stayOn = False)
+    run_bot(getAll = False, stayOn = True)
