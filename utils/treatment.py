@@ -6,7 +6,7 @@ from .writeData import write_count
 
 def users_not_in_data():
     usersData = get_users_data()
-    users = get_all_users()
+    users = get_all_users(fast=False)
     return list({user for user in users if str(user) not in usersData})
 
 def create_count():

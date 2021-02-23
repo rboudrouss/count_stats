@@ -78,7 +78,7 @@ def get_user_data(id=None):
     return users.get(str(id),{"Error":"404 User not found"})
 
 def get_all_users(fast=True):
-    if fast: return [user.id for user in get_user_data()]
+    if fast: return [user_id for user_id in get_users_data()]
     return list({msg["author_id"] for msg in get_history()})
 
 # Classement
