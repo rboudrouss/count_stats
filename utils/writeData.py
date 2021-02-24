@@ -9,7 +9,11 @@ def write_history(data):
     db.child("history").set(data)
 
 def append_history(data):
-    history = get_history() + data
+    history = get_history()
+
+    if type(data) is list: history += data
+    else: history.append(data)
+
     write_history(history)
 
 def write_users(data):
