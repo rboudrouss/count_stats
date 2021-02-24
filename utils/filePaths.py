@@ -2,10 +2,10 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-DATA_DIR = BASE_DIR/"data"
+UTILS_DIR = BASE_DIR/"utils"
 
-HISTORY_FILE = DATA_DIR/"history.json"
+DISBOT_DIR = BASE_DIR/"discord_bot"
 
-USERS_FILE = DATA_DIR/"users.json"
+TOKEN_PATH = DISBOT_DIR/"token"
 
-COUNT_FILE = DATA_DIR/"count.json"
+FBCONFIG_PATH = UTILS_DIR/"firebase.json"
