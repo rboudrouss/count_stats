@@ -13,7 +13,7 @@ else :
         "databaseURL": os.environ["databaseURL"],
         "projectId": os.environ["projetId"],
         "storageBucket": os.environ["storageBucket"],
-        "messagingSenderId": os.environ["messagingSendId"],
+        "messagingSenderId": os.environ["messagingSenderId"],
         "appId": os.environ["appId"]
     }
 
