@@ -57,7 +57,7 @@ class Bot(discord.Client):
     async def on_message(self, message):
         append_history({
             "message_id":message.id,
-            "author_id":message.authoir.id,
+            "author_id":message.author.id,
             "content":message.content,
             "date":list(message.created_at.timetuple())[:6],
         })
