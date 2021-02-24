@@ -7,9 +7,9 @@ sys.path.insert(0,'../')
 from utils.writeData import write_history, append_users
 from utils.treatment import users_not_in_data
 from utils.constants import CHANNEL_ID
+from utils.filePaths import TOKEN_PATH 
 
-TOKEN = os.environ["TOKEN"] if os.environ.get("TOKEN",None) else open("token",'r').read()
-
+TOKEN = os.environ["TOKEN"] if not TOKEN_PATH.exists() else TOKEN_PATH.read_text()
 class Bot(discord.Client):
     def __init__(self, getMsg=True, getAll=False, stayOn=False, *args, **kwargs):
         super().__init__(*args, **kwargs)
