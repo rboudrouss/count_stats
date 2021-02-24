@@ -11,8 +11,8 @@ def write_history(data):
 def append_history(data):
     history = get_history()
 
-    if type(data) is list: history += data
-    else: history.append(data)
+    if type(data) is list: history = data + history
+    else: history.insert(0, data)
 
     write_history(history)
 
