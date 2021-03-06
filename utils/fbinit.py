@@ -5,7 +5,7 @@ import os
 from .filePaths import FBCONFIG_PATH
 
 if FBCONFIG_PATH.exists():
-    firebaseConfig = json.loads(open(FBCONFIG_PATH).read())
+    firebaseConfig = json.loads(FBCONFIG_PATH.read_text())
 else :
     firebaseConfig = {
         "apiKey": os.environ["apiKey"],
