@@ -1,7 +1,52 @@
-// import axios from "axios";
-export const { count, last_update, podium } = require("./data/count") as Count;
-export const history = require("./data/history") as Message[];
-export const users = require("./data/users") as Users;
+import axios from "axios";
+
+const makefunc = (url:String) => {
+    const API_URL = "http://127.0.0.1:8000/api/"; //TODO hardcoded for now
+    const func = async (args?:{id?:String, mind?:String, maxd?:String, info?:String})=>{
+        let api_url = API_URL + url;
+        if (args){
+            const {id,mind,maxd,info}=args;
+            api_url += "?"
+            if (id){
+                api_url += `id=${id}&`
+            }
+            if (mind){
+                api_url += `mind=${mind}`
+            }
+            if (maxd){
+                api_url += `maxd=${maxd}`
+            }
+            if (info){
+                api_url += `info=${info}`
+            }
+        }
+        try {
+            const response = await axios.get(api_url);
+            return response.data; // TODO find a way to type this 
+        } catch (error) {
+            
+        }
+    }
+    return func
+}
+
+// Message
+
+export const getHistory  = makefunc("message/history");
+export const getUserMsg  = makefunc("message/usermsg");
+export const getDateMsg  = makefunc("message/datemsg");
+export const getUserDate = makefunc("message/userdate");
+export const getMsgInfo  = makefunc("message/msginfo");
+export const getMessage  = makefunc("message");
+
+// users
+export const getAllUsers = makefunc("user/users");
+export const getUser     = makefunc("user/users");
+export const getUsers    = makefunc("user");
+
+// count data
+export const getCount    = makefunc("count");
+
 
 interface Count{
     last_update:number[];
@@ -27,20 +72,10 @@ interface User{
     avatar_url:String
     name:String
     discriminator:String
-    id:number // TODO change this to String later
+    id:String 
 
 }
 
 interface Users{
     String:User
 }
-
-
-// const url = window.location.href;
-
-// export const fetchCount = async () => {
-//   try {
-//     const response = await axios.get(url+"/api/count");
-//     return response;
-//   } catch (error) {}
-// };
