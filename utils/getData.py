@@ -1,12 +1,12 @@
-import json
 import datetime
-from .filePaths import HISTORY_FILE, USERS_FILE, COUNT_FILE
+# from .branches import HISTORY, USERS, COUNT
+from .fbinit import db
 
 
 # message
 def get_history():
-    if HISTORY_FILE.exists() : return json.loads(HISTORY_FILE.read_text())
-    return []
+    history = db.child("history").get().val()
+    return list(history) if history is not None else [] 
 
 def get_user_msgs(id=None):
     history = get_history()
@@ -14,7 +14,7 @@ def get_user_msgs(id=None):
     user_msgs = [msg for msg in history if msg["author_id"]==int(id)]
     return user_msgs
 
-def get_msgs_date(mind=None,maxd=None):
+def get_msgs_date(mind=None, maxd=None):
     """
     max min must respect format : <Y>-<M>-<D>-<?H>-<?S>-<?MS>
     """
@@ -69,8 +69,8 @@ def get_messages(mind,maxd,id,infos): return get_msg_info(mind, maxd, id, infos)
 def get_users(id=None): return get_user_data(id)
 
 def get_users_data():
-    if USERS_FILE.exists(): return json.loads(USERS_FILE.read_text())
-    return {}
+    users = db.child("users").get().val()
+    return dict(users) if users is not None else []
 
 def get_user_data(id=None):
     users = get_users_data()
@@ -78,11 +78,11 @@ def get_user_data(id=None):
     return users.get(str(id),{"Error":"404 User not found"})
 
 def get_all_users(fast=True):
-    if fast: return [user.id for user in get_user_data()]
+    if fast: return [user_id for user_id in get_users_data()]
     return list({msg["author_id"] for msg in get_history()})
 
 # Classement
 
 def get_count():
-    if COUNT_FILE.exists(): return json.loads(COUNT_FILE.read_text())
-    return {}
+    count = db.child("count").get().val()
+    return dict(count) if count is not None else {}

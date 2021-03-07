@@ -26,7 +26,11 @@ SECRET_KEY = '6zvwt4qs^jk5m=&q*z_k018ue_vr+)$c7(s%(@)8hj&@^tqs&i'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "count-stats.herokuapp.com",
+    "localhost",
+    "127.0.0.1",
+]
 
 
 # Application definition
@@ -39,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'API.apps.ApiConfig',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -49,6 +54,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
+
 ]
 
 ROOT_URLCONF = 'backend.urls'
@@ -126,3 +134,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR/"frontend/build/static",
 ]
+
+STATIC_ROOT = BASE_DIR/'staticroot/'
+
+CORS_ORIGIN_ALLOW_ALL = True

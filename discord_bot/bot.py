@@ -1,15 +1,15 @@
 import discord
-import json
 import sys
+import os
 
 sys.path.insert(0,'../')
 
-from utils.writeData import write_history, append_users
+from utils.writeData import append_history, write_history, append_users
 from utils.treatment import users_not_in_data
 from utils.constants import CHANNEL_ID
+from utils.filePaths import TOKEN_PATH 
 
-CONFIG = json.loads(open("./config.json",'r').read())
-
+TOKEN = os.environ["TOKEN"] if not TOKEN_PATH.exists() else TOKEN_PATH.read_text()
 class Bot(discord.Client):
     def __init__(self, getMsg=True, getAll=False, stayOn=False, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -20,6 +20,7 @@ class Bot(discord.Client):
 
     async def on_ready(self):
         print('bot on !')
+        print(os.getcwd())
 
         if self.getMsg : await self.get_msgs(self.getAll)
         self.nUsers = users_not_in_data()
@@ -52,10 +53,19 @@ class Bot(discord.Client):
                 "id":           str(user.id),
             } for user in dUsers 
         })
+    
+    async def on_message(self, message):
+        if message.channel.id == CHANNEL_ID: 
+            append_history({
+                "message_id":message.id,
+                "author_id":message.author.id,
+                "content":message.content,
+                "date":list(message.created_at.timetuple())[:6],
+            })
 
 
 def run_bot(getAll = False, stayOn = True):
-    Bot(getAll=getAll, stayOn=stayOn).run(CONFIG["token"])
+    Bot(getAll=getAll, stayOn=stayOn).run(TOKEN)
 
-if __name__ == "__main__":
-    run_bot(getAll = False, stayOn = False)
+
+run_bot(getAll = False, stayOn = True)
