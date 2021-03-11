@@ -44,7 +44,7 @@ def inter_msg(request):
     return JsonResponse(get_nb_msg_inter(
         id=request.GET.get("id",None),
         inter=request.GET.get("inter",None),
-        empty=True if (em:=request.GET.get("empty", False))!="False" and em else False,
+        empty=True if request.GET.get("empty", "False").lower()!="false"else False,
         max=request.GET.get("max",None),
     ), safe=False)
 
