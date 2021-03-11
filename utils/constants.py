@@ -10,4 +10,4 @@ DELAY_COUNT_UPDATE = 300
 
 #TODO documentation
 INTER = "1-0-0"
-EMPTY = True
+EMPTY = False 
