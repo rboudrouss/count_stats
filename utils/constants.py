@@ -7,3 +7,7 @@ CHANNEL_ID = 557592500722728962
 
 # in seconds
 DELAY_COUNT_UPDATE = 300
+
+#TODO documentation
+INTER = "1-0-0"
+EMPTY = True
