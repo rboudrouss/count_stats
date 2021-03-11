@@ -4,7 +4,7 @@ from django.http import HttpResponse, JsonResponse
 
 from utils.getData import get_history, get_user_msgs, get_msgs_date, \
     get_user_date, get_messages, get_user_data, get_users_data, get_count, \
-    get_users
+    get_users, get_nb_msg_inter
 
 # Create your views here.
 def index(request):
@@ -41,6 +41,14 @@ def msg_info(request):
         maxd=request.GET.get("maxd",False),
         id=request.GET.get("id",False),
         infos= request.GET.get("info",False),
+    ), safe=False)
+
+def inter_msg(request):
+    return JsonResponse(get_nb_msg_inter(
+        id=request.GET.get("id",False),
+        inter=request.GET.get("inter", False),
+        empty=True if (em:=request.GET.get("empty", False))!="False" and em else False,
+        max=request.GET.get("max",False),
     ), safe=False)
 
 def messages(request):

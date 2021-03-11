@@ -1,7 +1,9 @@
 import datetime
 # from .branches import HISTORY, USERS, COUNT
 from .fbinit import db
+from .helpers import date_from_msg
 
+from .constants import INTER, EMPTY
 
 # message
 def get_history():
@@ -64,6 +66,52 @@ def get_msg_info(mind=None,maxd=None,id=None,infos=None):
     return [msg.get(infos) for msg in history]
 
 def get_messages(mind,maxd,id,infos): return get_msg_info(mind, maxd, id, infos)
+
+def get_nb_msg_inter(id=None, inter=None, empty=None, max=None):
+    """
+    inter format DD-HH-MM
+    """
+    if not inter: inter=INTER
+    if empty is None: empty=EMPTY
+    if type(max) is str: max=int(max)
+
+    history=get_history()
+    startd = date_from_msg(history[0])
+
+    inter=list(map(int, inter.split("-")))
+
+    is_minute = bool(inter[2])
+    is_hour = bool(inter[1])
+
+    if not is_minute:
+        startd = startd.replace(minute=1)
+        is_hour=False
+    if not is_hour:
+        startd.replace(hour=1)
+
+    inter=datetime.timedelta(days=inter[0], hours=inter[1], minutes=inter[2])
+
+    #TODO export this to helpers
+    rep = [[f"{startd.month}-{startd.day}"+(f"-{startd.hour}"if is_hour else "") + (f"-{startd.minute}" if is_minute else ""),0]]
+    i=0
+    #FIXME return is decalé by inter
+    for msg in history:
+        msg_date = date_from_msg(msg)
+        if startd-inter>msg_date:
+            while startd-inter>msg_date: startd-=inter
+            i+=1
+            rep.append([f"{startd.month}-{startd.day}"+(f"-{startd.hour}" if is_hour else "") + (f"-{startd.minute}" if is_minute else ""),0])
+        else:
+            # TODO optimize this
+            if id :
+                if msg["author_id"]==int(id):
+                    rep[i][1]+=1
+            else:
+                rep[i][1]+=1
+        if max and len(rep)>max:
+            return [i for i in rep if i[1]!=0] if empty else rep
+    #TODO not optimized
+    return [i for i in rep if i[1]!=0] if empty else rep
 
 # Users
 def get_users(id=None): return get_user_data(id)

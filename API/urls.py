@@ -10,6 +10,7 @@ urlpatterns = [
     path('message/datemsg', date_msgs, name='date messages'),
     path('message/userdate', user_date, name='user date message'),
     path('message/msginfo', msg_info, name="message info selection"),
+    path('message/inter', inter_msg, name="nb message by interval"),
     path('message', messages, name="Messages"),
     # user data
     path('user/users',users_data, name='users'),
