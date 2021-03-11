@@ -17,59 +17,56 @@ def chat_history(request):
     return JsonResponse(get_history(), safe=False)
 
 def user_msgs(request):
-    return JsonResponse(get_user_msgs(id=request.GET.get("id",False)),safe=False)
+    return JsonResponse(get_user_msgs(id=request.GET.get("id",None)),safe=False)
  
 def date_msgs(request):
-    min_ = request.GET.get("mind",False)
-    max_ = request.GET.get("maxd",False)
-    if not min_ and not max_ : return JsonResponse([], safe=False)
     return JsonResponse(get_msgs_date(
-        mind=min_,
-        maxd=max_,
+        mind=request.GET.get("mind",None),
+        maxd=request.GET.get("maxd",None),
     ), safe=False)
 
 def user_date(request):
     return JsonResponse(get_user_date(
-        mind=request.GET.get("mind",False),
-        maxd=request.GET.get("maxd",False),
-        id=request.GET.get("id",False)
+        mind=request.GET.get("mind",None),
+        maxd=request.GET.get("maxd",None),
+        id=request.GET.get("id",None)
     ), safe=False)
 
 def msg_info(request):
     return JsonResponse(get_messages(
-        mind=request.GET.get("mind",False),
-        maxd=request.GET.get("maxd",False),
-        id=request.GET.get("id",False),
-        infos= request.GET.get("info",False),
+        mind=request.GET.get("mind",None),
+        maxd=request.GET.get("maxd",None),
+        id=request.GET.get("id",None),
+        infos= request.GET.get("info",None),
     ), safe=False)
 
 def inter_msg(request):
     return JsonResponse(get_nb_msg_inter(
-        id=request.GET.get("id",False),
-        inter=request.GET.get("inter", False),
+        id=request.GET.get("id",None),
+        inter=request.GET.get("inter",None),
         empty=True if (em:=request.GET.get("empty", False))!="False" and em else False,
-        max=request.GET.get("max",False),
+        max=request.GET.get("max",None),
     ), safe=False)
 
 def messages(request):
     # TODO update this one
     return JsonResponse(get_messages(
-        mind=request.GET.get("mind",False),
-        maxd=request.GET.get("maxd",False),
-        id=request.GET.get("id",False),
-        infos= request.GET.get("info",False),
+        mind=request.GET.get("mind",None),
+        maxd=request.GET.get("maxd",None),
+        id=request.GET.get("id",None),
+        infos= request.GET.get("info",None),
     ), safe=False)
 
 # Users
 def users(request):
     # TODO update this one
-    return JsonResponse(get_users(id=request.GET.get("id",False)))
+    return JsonResponse(get_users(id=request.GET.get("id",None)))
 
 def users_data(request):
     return JsonResponse(get_users_data())
 
 def user_data(request):
-    return JsonResponse(get_user_data(id=request.GET.get("id",False)))
+    return JsonResponse(get_user_data(id=request.GET.get("id",None)))
 
 # Count
 def count(request):
