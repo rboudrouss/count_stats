@@ -1,5 +1,6 @@
-import datetime
-# from .branches import HISTORY, USERS, COUNT
+from datetime import datetime, timedelta
+# from time import sleep
+
 from .fbinit import db
 from .helpers import date_from_msg
 
@@ -8,6 +9,7 @@ from .constants import INTER, EMPTY
 # message
 def get_history():
     history = db.child("history").get().val()
+    # sleep(5)
     return list(history) if history is not None else [] 
 
 def get_user_msgs(id=None):
@@ -25,24 +27,24 @@ def get_msgs_date(mind=None, maxd=None):
     if not mind and not maxd : return history
     elif not mind :
         l = list(map(int, maxd.split('-')))
-        mind = datetime.datetime(*l)
+        mind = datetime(*l)
         l[-1]+=1
-        maxd = datetime.datetime(*l)
+        maxd = datetime(*l)
     elif not maxd:
         l = list(map(int, mind.split('-')))
-        mind = datetime.datetime(*l)
+        mind = datetime(*l)
         l[-1]+=1
-        maxd = datetime.datetime(*l)
+        maxd = datetime(*l)
     else:
-        mind = datetime.datetime(*map(int, mind.split('-')))
-        maxd = datetime.datetime(*map(int, maxd.split('-')))
+        mind = datetime(*map(int, mind.split('-')))
+        maxd = datetime(*map(int, maxd.split('-')))
     if mind>maxd : mind,maxd = (maxd,mind) # HACK
 
     max_index = 0; max_ = False
     min_index = 0; min_ = False
 
     for index,message in enumerate(history):
-        msg_date = datetime.datetime(*message["date"])
+        msg_date = datetime(*message["date"])
         if msg_date<mind and not max_:
             max_index=index
             max_ = True
@@ -89,7 +91,7 @@ def get_nb_msg_inter(id=None, inter=None, empty=None, max=None):
     if not is_hour:
         startd.replace(hour=1)
 
-    inter=datetime.timedelta(days=inter[0], hours=inter[1], minutes=inter[2])
+    inter=timedelta(days=inter[0], hours=inter[1], minutes=inter[2])
 
     #TODO export this to helpers
     rep = [[f"{startd.month}-{startd.day}"+(f"-{startd.hour}"if is_hour else "") + (f"-{startd.minute}" if is_minute else ""),0]]
