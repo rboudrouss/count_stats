@@ -2,22 +2,14 @@ import axios from "axios";
 
 const makefunc = (url:String) => {
     const API_URL = "http://127.0.0.1:8000/api/"; //TODO hardcoded for now
-    const func = async (args?:{id?:String, mind?:String, maxd?:String, info?:String})=>{
+    const func = async (args?:{id?:String, mind?:String, maxd?:String, info?:String, max?:number, empty?:boolean, inter?:String})=>{
         let api_url = API_URL + url;
         if (args){
-            const {id,mind,maxd,info}=args;
             api_url += "?"
-            if (id){
-                api_url += `id=${id}&`
-            }
-            if (mind){
-                api_url += `mind=${mind}`
-            }
-            if (maxd){
-                api_url += `maxd=${maxd}`
-            }
-            if (info){
-                api_url += `info=${info}`
+            for (const [key,value] of Object.entries(args)){
+                if(value){
+                    api_url += `${key}=${value}`
+                }
             }
         }
         try {
@@ -37,6 +29,7 @@ export const getUserMsg  = makefunc("message/usermsg");
 export const getDateMsg  = makefunc("message/datemsg");
 export const getUserDate = makefunc("message/userdate");
 export const getMsgInfo  = makefunc("message/msginfo");
+export const getMsgInter = makefunc("message/inter");
 export const getMessage  = makefunc("message");
 
 // users

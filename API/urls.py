@@ -1,6 +1,9 @@
 from django.urls import path
 
-from .views import *
+from .views import \
+    chat_history, user_msgs, date_msgs, user_date, msg_info, inter_msg, messages, \
+    users_data, user_data, users, \
+    count
 
 urlpatterns = [
     # path('', .index, name='index'),
@@ -10,6 +13,7 @@ urlpatterns = [
     path('message/datemsg', date_msgs, name='date messages'),
     path('message/userdate', user_date, name='user date message'),
     path('message/msginfo', msg_info, name="message info selection"),
+    path('message/inter', inter_msg, name="nb message by interval"),
     path('message', messages, name="Messages"),
     # user data
     path('user/users',users_data, name='users'),
