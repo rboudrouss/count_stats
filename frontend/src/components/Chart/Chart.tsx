@@ -4,7 +4,6 @@ import { Line } from "react-chartjs-2";
 import styles from "./Chart.module.css";
 import { getMsgInter } from "../../api";
 
-
 const Chart = () => {
   const [data, setData] = useState([]);
 
@@ -20,22 +19,34 @@ const Chart = () => {
   const lineChart = data ? (
     <Line
       data={{
-        labels: data?.map((item)=>item[0]),
-        datasets: [{
-          data:data?.map((item)=>item[1]),
-          label:"messages",
-          borderColor:"#3333ff",
-          fill:true
-        }],
+        labels: data?.map((item) => item[0]),
+        datasets: [
+          {
+            data: data?.map((item) => item[1]),
+            label: "messages",
+            borderColor: "#3333ff",
+            fill: true,
+          },
+        ],
       }}
     />
-  ) : null;
-
-  return (
-    <div className={styles.container}>
-      {lineChart}
-    </div>
+  ) : (
+    <Line
+      data={{
+        labels: ["404"],
+        datasets: [
+          {
+            data: 0,
+            label: "User not Found",
+            borderColor: "#ff0000",
+            fill: true,
+          },
+        ],
+      }}
+    />
   );
+
+  return <div className={styles.container}>{lineChart}</div>;
 };
 
 export default Chart;
