@@ -15,4 +15,4 @@ just a website non-minimalist that shows statistics about the activity of a disc
 - heroku
 
 gonna add more, MORE BLOAT \o/  
-_this is just a playground website, won't thing i'll ever do something this big for simple tasks like these_
+_this is just a playground website, don't think i'll ever do something this big for simple tasks like this one_
