@@ -5,7 +5,6 @@ import {
   Typography,
   Grid,
   Avatar,
-  StylesProvider,
 } from "@material-ui/core";
 import styles from "./Cards.module.css";
 import CountUp from "react-countup";
@@ -13,6 +12,7 @@ import cx from "classnames";
 
 const Cards = (props: any) => {
   console.log(props);
+  // TODO when no data
   const {
     podium: { top1, top2, top3 },
     count,
@@ -21,7 +21,6 @@ const Cards = (props: any) => {
   if (!top1) {
     return <h1>loading...</h1>;
   }
-  console.log(users[top2]?.avatar_url);
   return (
     <div className={styles.container}>
       <Grid container spacing={3} justify="center">
