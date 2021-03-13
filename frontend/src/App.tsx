@@ -10,21 +10,35 @@ class App extends React.Component {
     count: {},
     podium: {},
     users: {},
+    selectedUser: "",
   };
+  
+  constructor(props: any) {
+    super(props);
+    this.selectedUserChange = this.selectedUserChange.bind(this);
+  }
 
   async componentDidMount() {
     const { podium, count } = await getCount();
     const users = await getUsers();
     this.setState({ podium, count, users });
+    console.log(users);
+  }
+
+  async selectedUserChange(selectedUser: string) {
+    this.setState({ selectedUser: selectedUser });
   }
 
   render() {
-    const { podium, count, users } = this.state;
+    const { podium, count, users, selectedUser } = this.state;
     return (
       <div className={styles.container}>
         <Cards podium={podium} count={count} users={users} />
-        <Chart />
-        <UserPicker />
+        <UserPicker
+          users={users}
+          selectedUserChange={this.selectedUserChange}
+        />
+        <Chart selectedUser={selectedUser}/>
       </div>
     );
   }
