@@ -18,8 +18,8 @@ def create_count():
         else: count[str(msg["author_id"])] = 0
     return count
 
-def create_classement(count_dic=create_count(),top=3):
-    return {f"top{i}":k for i,k in enumerate(sorted(count_dic, key=count_dic.get, reverse=True))}
+def create_classement(count_dic=create_count()):
+    return {f"top{i+1}":k for i,k in enumerate(sorted(count_dic, key=count_dic.get, reverse=True))}
 
 def update_count():
     delta = datetime.now()-datetime(*get_count()["last_update"])
