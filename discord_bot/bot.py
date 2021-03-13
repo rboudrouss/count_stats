@@ -19,6 +19,7 @@ class Bot(discord.Client):
         self.getAll = getAll
         self.stayOn = stayOn
         self.updateAll = updateAll
+        self.allUsers = get_all_users()
         self.nUsers = users_not_in_data()
 
     async def on_ready(self):
@@ -26,7 +27,7 @@ class Bot(discord.Client):
 
         if self.getMsg : await self.get_msgs(self.getAll)
         if self.nUsers: await self.update_users(self.nUsers)
-        if self.updateAll: await self.update_users(get_all_users())
+        if self.updateAll: await self.update_users(self.allUsers)
         if not self.stayOn: await self.logout()
     
     async def get_msgs(self, getAll=False):
@@ -45,6 +46,7 @@ class Bot(discord.Client):
     
     async def update_users(self, users):
         print("users not in data: ", users)
+        if type(users) is not list : user = [user]
         dUsers = [await self.fetch_user(int(user)) for user in users]
         append_users({
             user.id : {
@@ -60,6 +62,10 @@ class Bot(discord.Client):
         if message.channel.id == CHANNEL_ID: 
             print(f"new message from channel !\n content : {message.content}")
             print(f"user : {message.author.display_name}")
+            if message.author.id not in self.allUsers:
+                print("New user detected")
+                self.update_users(message.author.id)
+                print("User added to DB")
             append_history({
                 "message_id":message.id,
                 "author_id":message.author.id,
