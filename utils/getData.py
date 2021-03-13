@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 # from time import sleep
 
 from .fbinit import db
-from .helpers import date_from_msg
+from .helpers import date_from_msg, str_from_date
 
 from .constants import INTER, EMPTY
 
@@ -75,7 +75,7 @@ def get_nb_msg_inter(id=None, inter=None, empty=None, max=None):
     """
     if not inter: inter=INTER
     if empty is None: empty=EMPTY
-    if type(max) is str: max=int(max)
+    if type(max) is not int: max=int(max)
 
     history=get_history()
     startd = date_from_msg(history[0])
@@ -93,16 +93,15 @@ def get_nb_msg_inter(id=None, inter=None, empty=None, max=None):
 
     inter=timedelta(days=inter[0], hours=inter[1], minutes=inter[2])
 
-    #TODO export this to helpers
-    rep = [[f"{startd.month}-{startd.day}"+(f"-{startd.hour}"if is_hour else "") + (f"-{startd.minute}" if is_minute else ""),0]]
+    rep = [[str_from_date(startd,is_hour,is_minute),0]]
     i=0
-    #FIXME return is decalé by inter
+    #FIXME return is decalé by inter except today
     for msg in history:
         msg_date = date_from_msg(msg)
         if startd-inter>msg_date:
             while startd-inter>msg_date: startd-=inter
             i+=1
-            rep.append([f"{startd.month}-{startd.day}"+(f"-{startd.hour}" if is_hour else "") + (f"-{startd.minute}" if is_minute else ""),0])
+            rep.append([str_from_date(startd,is_hour,is_minute),0])
         else:
             # TODO optimize this
             if id :
@@ -110,9 +109,11 @@ def get_nb_msg_inter(id=None, inter=None, empty=None, max=None):
                     rep[i][1]+=1
             else:
                 rep[i][1]+=1
+
+    #TODO not optimized
         if max and len(rep)>max:
             return [i for i in rep if i[1]!=0] if empty else rep
-    #TODO not optimized
+
     return [i for i in rep if i[1]!=0] if empty else rep
 
 # Users
