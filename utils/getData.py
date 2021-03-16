@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 from .fbinit import db
 from .helpers import date_from_msg, str_from_date
 from .types import MessageData, List, DateList, Optional, Union, MsgCount
-from .constants import INTER, EMPTY
+from .constants import INTER
 
 # message
 def get_history()->List[MessageData]:
@@ -85,12 +85,11 @@ def get_messages(mind,maxd,id,infos)->List[MessageData]:
     """
     return get_msg_info(mind, maxd, id, infos)
 
-def get_nb_msg_inter(id=None, inter=None, empty=None, max=None)->List[MsgCount]:
+def get_nb_msg_inter(id:int=None, inter:str=None, max:Union[int, str]=None, empty:bool=False)->List[MsgCount]:
     """
     inter format DD-HH-MM
     """
     if not inter: inter=INTER
-    if empty is None: empty=EMPTY
     if max and type(max) is not int: max=int(max)
 
     history=get_history()
@@ -110,21 +109,20 @@ def get_nb_msg_inter(id=None, inter=None, empty=None, max=None)->List[MsgCount]:
     inter=timedelta(days=inter[0], hours=inter[1], minutes=inter[2])
 
     rep = [[str_from_date(startd,is_hour,is_minute),0]]
-    i=0
     #FIXME return is decalé by inter except today
     for msg in history:
         msg_date = date_from_msg(msg)
         if startd-inter>msg_date:
-            while startd-inter>msg_date: startd-=inter
-            i+=1
-            rep.append([str_from_date(startd,is_hour,is_minute),0])
+            while startd-inter>msg_date:
+                rep.append([str_from_date(startd,is_hour,is_minute),0])
+                startd-=inter
         else:
             # TODO optimize this
             if id :
                 if msg["author_id"]==int(id):
-                    rep[i][1]+=1
+                    rep[-1][1]+=1
             else:
-                rep[i][1]+=1
+                rep[-1][1]+=1
 
     #TODO not optimized
         if max and len(rep)>max:
