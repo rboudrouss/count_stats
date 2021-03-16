@@ -1,13 +1,14 @@
+from .types import List
 
-TESTERS = [
+TESTERS: List[int]= [
     690869031531446313,
 ]
 
-CHANNEL_ID = 557592500722728962
+CHANNEL_ID:int = 557592500722728962
 
 # in seconds
-DELAY_COUNT_UPDATE = 60
+DELAY_COUNT_UPDATE:int= 60
 
 #TODO documentation
-INTER = "1-0-0"
-EMPTY = False 
+INTER:str  = "1-0-0"
+EMPTY:bool = False

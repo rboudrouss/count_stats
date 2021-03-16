@@ -1,4 +1,4 @@
-from typing import List, TypedDict, Dict, Annotated
+from typing import List, TypedDict, Dict, Annotated, Union, Optional
 
 # MaxLen : 6
 DateList = List[int]
@@ -16,3 +16,16 @@ class MessageData(TypedDict):
     date      : DateList
 
 UsersData = Dict[int, UserData]
+
+UserId = Union[str,int]
+
+Count = Dict[str,int]
+
+Podium = Dict[str,str]
+
+class AllCount(TypedDict):
+    last_update:DateList
+    count:Count
+    podium: Podium
+
+MsgCount = List[Union[str,int]]

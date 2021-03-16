@@ -3,22 +3,28 @@ from datetime import datetime, timedelta
 
 from .fbinit import db
 from .helpers import date_from_msg, str_from_date
-
+from .types import MessageData, List, DateList, Optional, Union, MsgCount
 from .constants import INTER, EMPTY
 
 # message
-def get_history():
+def get_history()->List[MessageData]:
+    """
+    TODO
+    """
     history = db.child("history").get().val()
     # sleep(5)
     return list(history) if history is not None else [] 
 
-def get_user_msgs(id=None):
+def get_user_msgs(id:Optional[Union[str,int]]=None)->List[MessageData]:
+    """
+    TODO
+    """
     history = get_history()
     if not id: return history
     user_msgs = [msg for msg in history if msg["author_id"]==int(id)]
     return user_msgs
 
-def get_msgs_date(mind=None, maxd=None):
+def get_msgs_date(mind:Optional[str]=None, maxd:Optional[str]=None)->List[MessageData]:
     """
     max min must respect format : <Y>-<M>-<D>-<?H>-<?S>-<?MS>
     """
@@ -57,19 +63,29 @@ def get_msgs_date(mind=None, maxd=None):
 
     return history[min_index:max_index]
 
-def get_user_date(mind=None,maxd=None,id=None):
+def get_user_date(mind=None,maxd=None,id=None)->List[MessageData]:
+    """
+    TODO
+    """
     history = get_msgs_date(mind,maxd)
     if not id: return history
     return [msg for msg in history if msg["author_id"]==int(id)]
 
-def get_msg_info(mind=None,maxd=None,id=None,infos=None):
+def get_msg_info(mind=None,maxd=None,id=None,infos=None)->List[Union[MessageData, str, int, DateList]]:
+    """
+    TODO
+    """
     history = get_user_date(mind, maxd, id)
     if not infos: return history
     return [msg.get(infos) for msg in history]
 
-def get_messages(mind,maxd,id,infos): return get_msg_info(mind, maxd, id, infos)
+def get_messages(mind,maxd,id,infos)->List[MessageData]:
+    """
+    TODO
+    """
+    return get_msg_info(mind, maxd, id, infos)
 
-def get_nb_msg_inter(id=None, inter=None, empty=None, max=None):
+def get_nb_msg_inter(id=None, inter=None, empty=None, max=None)->List[MsgCount]:
     """
     inter format DD-HH-MM
     """

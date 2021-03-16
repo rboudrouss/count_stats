@@ -3,14 +3,15 @@ from datetime import datetime
 from .constants import DELAY_COUNT_UPDATE
 from .getData import get_all_users, get_users_data, get_history, get_count
 from .writeData import write_count
+from .types import Count, List, Dict, Podium
 
 
-def users_not_in_data():
+def users_not_in_data()->List[int]:
     usersData = get_users_data()
     users = get_all_users(fast=False)
     return list({user for user in users if str(user) not in usersData})
 
-def create_count():
+def create_count()->Count:
     history=get_history()
     count = {}
     for msg in history:
@@ -18,10 +19,10 @@ def create_count():
         else: count[str(msg["author_id"])] = 1
     return count
 
-def create_classement(count_dic=create_count()):
+def create_classement(count_dic=create_count())->Podium:
     return {f"top{i+1}":k for i,k in enumerate(sorted(count_dic, key=count_dic.get, reverse=True))}
 
-def update_count():
+def update_count()->None:
     delta = datetime.now()-datetime(*get_count()["last_update"])
     if delta.seconds>DELAY_COUNT_UPDATE:
         count = create_count()

@@ -1,7 +1,6 @@
 import sys
 import os
 from discord import User, Client, Message
-from typing import List
 
 sys.path.insert(0,'../')
 
@@ -11,6 +10,7 @@ from utils.getData import get_all_users
 from utils.constants import CHANNEL_ID
 from utils.filePaths import TOKEN_PATH
 from utils.helpers import data_from_message, data_from_user
+from utils.types import List
 
 TOKEN = os.environ["TOKEN"] if not TOKEN_PATH.exists() else TOKEN_PATH.read_text()
 
@@ -32,10 +32,10 @@ class Bot(Client):
         if self.nUsers: await self.update_users_id(self.nUsers)
         if self.updateAll: await self.update_users_id(self.allUsers)
         self.allUsers = get_all_users()
-        del self.nUsers
+        del self.nUsers # Don't need it anymore
         if not self.stayOn: await self.logout()
     
-    async def get_msgs(self, getAll=False):
+    async def get_msgs(self, getAll:bool=False):
         print("Fetching new messages...")
         channel = self.get_channel(CHANNEL_ID)
         msg_hst = channel.history(limit=(None if getAll else 200))#.flatten()
@@ -46,7 +46,7 @@ class Bot(Client):
         ])
         print("messages fetched !")
     
-    async def update_users_id(self, users):
+    async def update_users_id(self, users:List[int]):
         print("users not in data: ", users)
         if type(users) is not list : user = [user]
         dUsers = [await self.fetch_user(int(user)) for user in users]
@@ -56,7 +56,7 @@ class Bot(Client):
     def update_users(self, users:List[User]):
         data = {}
         for user in users:
-            data = dict(data, *data_from_user(user))
+            data = dict(data, **data_from_user(user))
         append_users(data)
     
     async def on_message(self, message:Message):

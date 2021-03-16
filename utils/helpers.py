@@ -9,7 +9,7 @@ def date_from_msg(msg:List[int])->datetime:
         return datetime(*msg["date"])
 
 
-def str_from_date(date:datetime, is_hour=True, is_minute=True)->str:
+def str_from_date(date:datetime, is_hour:bool=True, is_minute:bool=True)->str:
     return f"{date.month}-{date.day}"+(f"-{date.hour}"if is_hour else "") + (f"-{date.minute}" if is_minute else "")
 
 def data_from_message(message:Message)->MessageData:
