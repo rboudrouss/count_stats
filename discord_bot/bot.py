@@ -83,4 +83,4 @@ def run_bot(**kwargs):
     Bot(**kwargs).run(TOKEN)
 
 if __name__ == "__main__":
-    run_bot(stayOn=True, getAll=False)
+    run_bot(stayOn=True, getAll=True)
