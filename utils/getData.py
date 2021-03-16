@@ -75,7 +75,7 @@ def get_nb_msg_inter(id=None, inter=None, empty=None, max=None):
     """
     if not inter: inter=INTER
     if empty is None: empty=EMPTY
-    if type(max) is not int: max=int(max)
+    if max and type(max) is not int: max=int(max)
 
     history=get_history()
     startd = date_from_msg(history[0])
