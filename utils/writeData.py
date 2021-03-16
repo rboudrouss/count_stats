@@ -2,13 +2,17 @@ import json
 # from .branches import USERS, HISTORY, COUNT
 from .fbinit import db
 from .getData import get_history, get_users_data
+from .types import MessageData, List, UsersData
 
-def write_history(data):
+def write_history(data:List[MessageData])->None:
+    """
+    TODO
+    """
     if type(data) is not list:
         data = json.loads(data)
     db.child("history").set(data)
 
-def append_history(data):
+def append_history(data:List[MessageData])->None:
     history = get_history()
 
     if type(data) is list: history = data + history
@@ -16,12 +20,12 @@ def append_history(data):
 
     write_history(history)
 
-def write_users(data):
+def write_users(data:UsersData)->None:
     if type(data) is not dict:
         data = json.loads(data)
     db.child("users").set(data)
 
-def append_users(data):
+def append_users(data:UsersData)->None:
     users = dict(get_users_data(), **{str(k):v for k,v in data.items()})
     write_users(users)
 

@@ -4,17 +4,25 @@ import { Line } from "react-chartjs-2";
 import styles from "./Chart.module.css";
 import { getMsgInter } from "../../api";
 
-const Chart = () => {
+const Chart = (props: any) => {
   const [data, setData] = useState([]);
+
+  const selectedUser: String = props.selectedUser;
 
   useEffect(() => {
     const fetchAPI = async () => {
-      setData(await getMsgInter());
+      const data1 = await getMsgInter({
+        // max: 10,
+        empty: true,
+        id: selectedUser,
+      });
+      if (data1) {
+        setData(data1);
+      }
     };
-    console.log(data);
 
     fetchAPI();
-  });
+  }, [selectedUser]); // disabled autoupdate
 
   const lineChart = data ? (
     <Line
@@ -33,7 +41,7 @@ const Chart = () => {
   ) : (
     <Line
       data={{
-        labels: ["404"],
+        labels: [],
         datasets: [
           {
             data: 0,

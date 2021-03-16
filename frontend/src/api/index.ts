@@ -1,22 +1,31 @@
 import axios from "axios";
 
 const makefunc = (url:String) => {
-    const API_URL = "http://127.0.0.1:8000/api/"; //TODO hardcoded for now
-    const func = async (args?:{id?:String, mind?:String, maxd?:String, info?:String, max?:number, empty?:boolean, inter?:String})=>{
+    const API_URL = "https://count-stats.herokuapp.com/api/"; //TODO hardcoded for now
+    const func = async (args?:{
+        id?:String,
+        mind?:String,
+        maxd?:String, 
+        info?:String, 
+        max?:number, 
+        empty?:boolean, 
+        inter?:String
+    }) => {
         let api_url = API_URL + url;
         if (args){
             api_url += "?"
             for (const [key,value] of Object.entries(args)){
                 if(value){
-                    api_url += `${key}=${value}`
+                    api_url += `&${key}=${value}`
                 }
             }
         }
         try {
+            console.log(`calling ${api_url}`)
             const response = await axios.get(api_url);
             return response.data; // TODO find a way to type this 
         } catch (error) {
-            
+            console.log(error)
         }
     }
     return func
@@ -34,7 +43,7 @@ export const getMessage  = makefunc("message");
 
 // users
 export const getAllUsers = makefunc("user/users");
-export const getUser     = makefunc("user/users");
+export const getUser     = makefunc("user/user");
 export const getUsers    = makefunc("user");
 
 // count data

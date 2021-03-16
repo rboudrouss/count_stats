@@ -2,23 +2,29 @@ from datetime import datetime, timedelta
 # from time import sleep
 
 from .fbinit import db
-from .helpers import date_from_msg
-
-from .constants import INTER, EMPTY
+from .helpers import date_from_msg, str_from_date
+from .types import MessageData, List, DateList, Optional, Union, MsgCount
+from .constants import INTER
 
 # message
-def get_history():
+def get_history()->List[MessageData]:
+    """
+    TODO
+    """
     history = db.child("history").get().val()
     # sleep(5)
     return list(history) if history is not None else [] 
 
-def get_user_msgs(id=None):
+def get_user_msgs(id:Optional[Union[str,int]]=None)->List[MessageData]:
+    """
+    TODO
+    """
     history = get_history()
     if not id: return history
     user_msgs = [msg for msg in history if msg["author_id"]==int(id)]
     return user_msgs
 
-def get_msgs_date(mind=None, maxd=None):
+def get_msgs_date(mind:Optional[str]=None, maxd:Optional[str]=None)->List[MessageData]:
     """
     max min must respect format : <Y>-<M>-<D>-<?H>-<?S>-<?MS>
     """
@@ -57,25 +63,34 @@ def get_msgs_date(mind=None, maxd=None):
 
     return history[min_index:max_index]
 
-def get_user_date(mind=None,maxd=None,id=None):
+def get_user_date(mind=None,maxd=None,id=None)->List[MessageData]:
+    """
+    TODO
+    """
     history = get_msgs_date(mind,maxd)
     if not id: return history
     return [msg for msg in history if msg["author_id"]==int(id)]
 
-def get_msg_info(mind=None,maxd=None,id=None,infos=None):
+def get_msg_info(mind=None,maxd=None,id=None,infos=None)->List[Union[MessageData, str, int, DateList]]:
+    """
+    TODO
+    """
     history = get_user_date(mind, maxd, id)
     if not infos: return history
     return [msg.get(infos) for msg in history]
 
-def get_messages(mind,maxd,id,infos): return get_msg_info(mind, maxd, id, infos)
+def get_messages(mind,maxd,id,infos)->List[MessageData]:
+    """
+    TODO
+    """
+    return get_msg_info(mind, maxd, id, infos)
 
-def get_nb_msg_inter(id=None, inter=None, empty=None, max=None):
+def get_nb_msg_inter(id:int=None, inter:str=None, max:Union[int, str]=None, empty:bool=False)->List[MsgCount]:
     """
     inter format DD-HH-MM
     """
     if not inter: inter=INTER
-    if empty is None: empty=EMPTY
-    if type(max) is str: max=int(max)
+    if max and type(max) is not int: max=int(max)
 
     history=get_history()
     startd = date_from_msg(history[0])
@@ -93,26 +108,26 @@ def get_nb_msg_inter(id=None, inter=None, empty=None, max=None):
 
     inter=timedelta(days=inter[0], hours=inter[1], minutes=inter[2])
 
-    #TODO export this to helpers
-    rep = [[f"{startd.month}-{startd.day}"+(f"-{startd.hour}"if is_hour else "") + (f"-{startd.minute}" if is_minute else ""),0]]
-    i=0
-    #FIXME return is decalé by inter
+    rep = [[str_from_date(startd,is_hour,is_minute),0]]
+    #FIXME return is decalé by inter except today
     for msg in history:
         msg_date = date_from_msg(msg)
         if startd-inter>msg_date:
-            while startd-inter>msg_date: startd-=inter
-            i+=1
-            rep.append([f"{startd.month}-{startd.day}"+(f"-{startd.hour}" if is_hour else "") + (f"-{startd.minute}" if is_minute else ""),0])
+            while startd-inter>msg_date:
+                rep.append([str_from_date(startd,is_hour,is_minute),0])
+                startd-=inter
         else:
             # TODO optimize this
             if id :
                 if msg["author_id"]==int(id):
-                    rep[i][1]+=1
+                    rep[-1][1]+=1
             else:
-                rep[i][1]+=1
+                rep[-1][1]+=1
+
+    #TODO not optimized
         if max and len(rep)>max:
             return [i for i in rep if i[1]!=0] if empty else rep
-    #TODO not optimized
+
     return [i for i in rep if i[1]!=0] if empty else rep
 
 # Users
