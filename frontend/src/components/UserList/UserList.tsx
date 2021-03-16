@@ -5,7 +5,6 @@ import CountUp from "react-countup";
 import UserCard from "../UserCard/UserCard";
 
 const UserList = (props: Props) => {
-  console.log(props);
   if (!props.users) {
     return <h1>loading...</h1>;
   }
@@ -13,7 +12,7 @@ const UserList = (props: Props) => {
   return (
     <div className={styles.container}>
       {Object.values(podium).map((user: any, i: number) => (
-        <UserCard user={user} top={i + 1} count={count} users={users} />
+        <UserCard key={i} user={user} top={i + 1} count={count} users={users} className={styles.card}/>
       ))}
     </div>
   );
