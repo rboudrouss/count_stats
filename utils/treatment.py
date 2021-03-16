@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from .constants import DELAY_COUNT_UPDATE
 from .getData import get_all_users, get_users_data, get_history, get_count
@@ -23,7 +23,9 @@ def create_classement(count_dic=create_count())->Podium:
     return {f"top{i+1}":k for i,k in enumerate(sorted(count_dic, key=count_dic.get, reverse=True))}
 
 def update_count()->None:
-    delta = datetime.now()-datetime(*get_count()["last_update"])
+    lastUpdate = get_count().get("last_update", False)
+    if lastUpdate: delta = datetime.now()-datetime(*lastUpdate)
+    else: delta = timedelta(seconds=DELAY_COUNT_UPDATE+1)
     if delta.seconds>DELAY_COUNT_UPDATE:
         count = create_count()
         write_count({
