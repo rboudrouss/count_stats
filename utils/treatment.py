@@ -15,7 +15,7 @@ def create_count():
     count = {}
     for msg in history:
         if str(msg["author_id"]) in count: count[str(msg["author_id"])] +=1
-        else: count[str(msg["author_id"])] = 0
+        else: count[str(msg["author_id"])] = 1
     return count
 
 def create_classement(count_dic=create_count()):
