@@ -4,21 +4,25 @@ import { Line } from "react-chartjs-2";
 import styles from "./Chart.module.css";
 import { getMsgInter } from "../../api";
 
-const Chart = (props:any) => {
+const Chart = (props: any) => {
   const [data, setData] = useState([]);
 
-  const selectedUser:String=props.selectedUser
+  const selectedUser: String = props.selectedUser;
 
   useEffect(() => {
     const fetchAPI = async () => {
-      const data1 = await getMsgInter({ max: 10, id:selectedUser });
+      const data1 = await getMsgInter({
+        // max: 10,
+        empty: false,
+        id: selectedUser,
+      });
       if (data1) {
         setData(data1);
       }
     };
 
     fetchAPI();
-  });
+  }, [selectedUser]); // disabled autoupdate
 
   const lineChart = data ? (
     <Line
