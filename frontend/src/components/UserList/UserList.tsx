@@ -11,8 +11,15 @@ const UserList = (props: Props) => {
   var { count, users, podium } = props;
   return (
     <div className={styles.container}>
-      {Object.values(podium).map((user: any, i: number) => (
-        <UserCard key={i} user={user} top={i + 1} count={count} users={users} className={styles.card}/>
+      {Object.keys(podium).map((top: any, i: number) => (
+        <UserCard
+          key={i}
+          user={podium[top]}
+          top={top} // FIXME
+          count={count}
+          users={users}
+          className={styles.card}
+        />
       ))}
     </div>
   );
