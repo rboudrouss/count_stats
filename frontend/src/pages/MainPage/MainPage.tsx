@@ -22,7 +22,6 @@ class MainPage extends React.Component {
     const { podium, count } = allCount ? allCount : { podium: {}, count: {} };
     const users = await getUsers();
     this.setState({ podium, count, users });
-    console.log(users);
   }
 
   async selectedUserChange(selectedUser: string) {

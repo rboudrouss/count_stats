@@ -7,7 +7,6 @@ import UserList from "../UserList/UserList";
 import { UserCard } from "..";
 
 const Cards = (props: any) => {
-  console.log(props);
   if (!props.podium) {
     return <h1>loading...</h1>;
   }

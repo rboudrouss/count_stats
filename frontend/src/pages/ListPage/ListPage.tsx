@@ -15,7 +15,6 @@ class ListPage extends React.Component {
     const { podium, count } = await getCount();
     const users = await getUsers();
     this.setState({ podium, count, users });
-    console.log(users);
   }
 
   render() {
