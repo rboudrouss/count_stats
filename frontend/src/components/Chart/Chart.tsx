@@ -13,7 +13,7 @@ const Chart = (props: any) => {
     const fetchAPI = async () => {
       const data1 = await getMsgInter({
         // max: 10,
-        empty: false,
+        empty: true,
         id: selectedUser,
       });
       if (data1) {
