@@ -2,7 +2,15 @@ import axios from "axios";
 
 const makefunc = (url:String) => {
     const API_URL = "https://count-stats.herokuapp.com/api/"; //TODO hardcoded for now
-    const func = async (args?:{id?:String, mind?:String, maxd?:String, info?:String, max?:number, empty?:boolean, inter?:String})=>{
+    const func = async (args?:{
+        id?:String,
+        mind?:String,
+        maxd?:String, 
+        info?:String, 
+        max?:number, 
+        empty?:boolean, 
+        inter?:String
+    }) => {
         let api_url = API_URL + url;
         if (args){
             api_url += "?"
@@ -13,6 +21,7 @@ const makefunc = (url:String) => {
             }
         }
         try {
+            console.log(`calling ${api_url}`)
             const response = await axios.get(api_url);
             return response.data; // TODO find a way to type this 
         } catch (error) {
