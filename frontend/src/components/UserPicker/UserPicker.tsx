@@ -3,7 +3,7 @@ import { NativeSelect, FormControl } from "@material-ui/core";
 import styles from "./UserPicker.module.css";
 
 const UserPicker = (props: any) => {
-  const users = props.users;
+  const users = props.users ? props.users : {};
   const selectedUserChange: any = props.selectedUserChange;
 
   return (
