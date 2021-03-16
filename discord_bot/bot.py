@@ -1,6 +1,6 @@
 import sys
 import os
-from discord import User, Client, Message
+from discord import User, Client, Message, errors
 
 sys.path.insert(0,'../')
 
@@ -22,13 +22,13 @@ class Bot(Client):
         self.getAll = getAll
         self.stayOn = stayOn
         self.updateAll = updateAll
-        self.allUsers = get_all_users()
-        self.nUsers = users_not_in_data()
 
     async def on_ready(self):
         print('bot on !')
 
         if self.getMsg : await self.get_msgs(self.getAll)
+        self.allUsers = get_all_users()
+        self.nUsers = users_not_in_data()
         if self.nUsers: await self.update_users_id(self.nUsers)
         if self.updateAll: await self.update_users_id(self.allUsers)
         self.allUsers = get_all_users()
@@ -49,7 +49,12 @@ class Bot(Client):
     async def update_users_id(self, users:List[int]):
         print("users not in data: ", users)
         if type(users) is not list : user = [user]
-        dUsers = [await self.fetch_user(int(user)) for user in users]
+        dUsers = []
+        for user in users:
+            try:
+                dUsers.append(await self.fetch_user(user))
+            except errors.NotFound:
+                print(f"ALERTE user {user} Not Found !")
         self.update_users(dUsers)
         print("Users updated")
     
