@@ -10,7 +10,7 @@ def date_from_msg(msg:List[int])->datetime:
 
 
 def str_from_date(date:datetime, is_hour:bool=True, is_minute:bool=True)->str:
-    return f"{date.month}-{date.day}"+(f"-{date.hour}"if is_hour else "") + (f"-{date.minute}" if is_minute else "")
+    return f"{date.day}-{date.month}"+(f"-{date.hour}"if is_hour else "") + (f"-{date.minute}" if is_minute else "")
 
 def data_from_message(message:Message)->MessageData:
     return {
@@ -22,7 +22,7 @@ def data_from_message(message:Message)->MessageData:
 
 def data_from_user(user:User)->UsersData:
     return {
-        user.id : {
+        str(user.id) : {
             "avatar_url":   str(user.avatar_url),
             "name":         user.display_name,
             "discriminator":user.discriminator,
