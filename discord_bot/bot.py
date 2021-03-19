@@ -83,4 +83,15 @@ def run_bot(**kwargs):
     Bot(**kwargs).run(TOKEN)
 
 if __name__ == "__main__":
-    run_bot(stayOn=True, getAll=True)
+    stayOn = getAll = getMsg = updateAll = False
+    args = [arg.lower() for arg in sys.argv[1:]]
+    if "stayon" in args: stayOn=True
+    if "getall" in args: getAll=True
+    if "getmsg" in args: getMsg=True
+    if "updateall" in args: updateAll=True
+    run_bot(
+        stayOn=stayOn,
+        getAll=getAll,
+        getMsg=getMsg,
+        updateAll=updateAll
+    )
