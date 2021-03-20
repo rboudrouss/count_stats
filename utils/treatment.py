@@ -11,8 +11,7 @@ def users_not_in_data()->List[int]:
     users = get_all_users(fast=False)
     return list({user for user in users if str(user) not in usersData})
 
-def create_count()->Count:
-    history=get_history()
+def create_count(history=get_history())->Count:
     count = {}
     for msg in history:
         if str(msg["author_id"]) in count: count[str(msg["author_id"])] +=1

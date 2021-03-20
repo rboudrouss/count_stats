@@ -1,12 +1,9 @@
 from datetime import datetime
 from discord import User, Message
-from .types import UsersData, MessageData, List
+from .types import UsersData, MessageData, List, Union
 
-def date_from_msg(msg:List[int])->datetime:
-    if msg is list:
-        return datetime(*msg)
-    else:
-        return datetime(*msg["date"])
+def date_from_msg(msg:MessageData)->datetime:
+    return datetime(*msg["date"])
 
 
 def str_from_date(date:datetime, is_hour:bool=True, is_minute:bool=True)->str:

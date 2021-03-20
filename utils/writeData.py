@@ -26,10 +26,10 @@ def write_users(data:UsersData)->None:
     db.child("users").set(data)
 
 def append_users(data:UsersData)->None:
-    users = dict(get_users_data(), **{str(k):v for k,v in data.items()})
+    users = dict(get_users_data(), **data.items())
     write_users(users)
 
-def write_count(data):
+def write_count(data)->None:
     if type(data) is not dict:
         data = json.loads(data)
     db.child("count").set(data)
