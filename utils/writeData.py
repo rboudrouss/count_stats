@@ -26,7 +26,7 @@ def write_users(data:UsersData)->None:
     db.child("users").set(data)
 
 def append_users(data:UsersData)->None:
-    users = dict(get_users_data(), **data.items())
+    users = dict(get_users_data(), **data)
     write_users(users)
 
 def write_count(data)->None:
