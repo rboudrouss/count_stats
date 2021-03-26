@@ -9,8 +9,8 @@ TESTERS: List[int]= [
 CHANNEL_ID:int = 802954710092480533
 
 # in seconds
-DELAY_COUNT_UPDATE:int= 60
+DELAY_COUNT_UPDATE:int= 60  # time before count update
+DELAY_CACHE:int = 60        # time before cache expires
 
 #TODO documentation
 INTER:str  = "1-0-0"
-EMPTY:bool = False
