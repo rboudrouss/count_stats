@@ -2,6 +2,18 @@ import sys
 import os
 from discord import User, Client, Message, errors
 
+if __name__ == "__main__":
+    args = [arg.lower() for arg in sys.argv[1:]]
+    if "help" in args:
+        print("""gets optionnal arguments (default False):
+        StayOn    : bot'll stays on and listens to new message
+        GetMsg    : bot'll get old messages (it'll overwrite all data)
+        GetAll    : bot'll fetch ALL messages on start (recommended in production)
+        UpdateAll : bot'll update all users data 
+        Listen : bot'll listen to new messages and add them to DB
+        """)
+        exit(0)
+
 sys.path.insert(0,'../')
 
 from utils.writeData import append_history, write_history, append_users
@@ -15,13 +27,15 @@ from utils.types import List
 TOKEN = os.environ["TOKEN"] if not TOKEN_PATH.exists() else TOKEN_PATH.read_text()
 
 class Bot(Client):
-    def __init__(self, getMsg=True, getAll=False, stayOn=False, updateAll=False, *args, **kwargs):
+    def __init__(self, getMsg=True, getAll=False, stayOn=False, updateAll=False,listen=False, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
         self.getMsg = getMsg
         self.getAll = getAll
         self.stayOn = stayOn
         self.updateAll = updateAll
+        self.listen = listen
+        self.allUsers = get_all_users()
 
     async def on_ready(self):
         print('bot on !')
@@ -48,7 +62,7 @@ class Bot(Client):
     
     async def update_users_id(self, users:List[int]):
         print("users not in data: ", users)
-        if type(users) is not list : user = [user]
+        if type(users) is not list : users = [users]
         dUsers = []
         for user in users:
             try:
@@ -60,15 +74,17 @@ class Bot(Client):
     
     def update_users(self, users:List[User]):
         data = {}
+        if type(users) is not list : users=[users]
         for user in users:
             data = dict(data, **data_from_user(user))
         append_users(data)
     
     async def on_message(self, message:Message):
+        if not self.listen: return 
         if message.channel.id == CHANNEL_ID: 
             print(f"new message from channel !\n content : {message.content}")
             print(f"user : {message.author.display_name}")
-            if message.author.id not in self.allUsers:
+            if str(message.author.id) not in self.allUsers:
                 print("New user detected")
                 self.update_users(message.author)
                 self.allUsers = get_all_users()
@@ -83,15 +99,16 @@ def run_bot(**kwargs):
     Bot(**kwargs).run(TOKEN)
 
 if __name__ == "__main__":
-    stayOn = getAll = getMsg = updateAll = False
-    args = [arg.lower() for arg in sys.argv[1:]]
+    listen = stayOn = getAll = getMsg = updateAll = False
     if "stayon" in args: stayOn=True
     if "getall" in args: getAll=True
     if "getmsg" in args: getMsg=True
     if "updateall" in args: updateAll=True
+    if "listen" in args: listen=True
     run_bot(
         stayOn=stayOn,
         getAll=getAll,
         getMsg=getMsg,
-        updateAll=updateAll
+        updateAll=updateAll,
+        listen=listen
     )
