@@ -9,7 +9,6 @@ import {
 } from "react-router-dom";
 
 import { MainPage, ListPage, UserPage } from "./pages";
-import { getCount, getUsers } from "./api";
 
 class App extends React.Component {
   render() {
