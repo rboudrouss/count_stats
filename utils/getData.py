@@ -1,20 +1,21 @@
 from datetime import datetime, timedelta
-# from time import sleep
 
 from .fbinit import db
 from .helpers import date_from_msg, str_from_date
 from .types import MessageData, List, DateList, Optional, Union, MsgCount
-from .constants import INTER
+from .constants import INTER, DELAY_CACHE
+from cachetools import cached, LRUCache, TTLCache
 
 # message
+@cached(cache=TTLCache(maxsize=1,ttl=120))
 def get_history()->List[MessageData]:
     """
     TODO
     """
     history = db.child("history").get().val()
-    # sleep(5)
     return list(history) if history is not None else [] 
 
+@cached(cache=TTLCache(maxsize=10,ttl=DELAY_CACHE))
 def get_user_msgs(id:Optional[Union[str,int]]=None)->List[MessageData]:
     """
     TODO
@@ -24,6 +25,7 @@ def get_user_msgs(id:Optional[Union[str,int]]=None)->List[MessageData]:
     user_msgs = [msg for msg in history if msg["author_id"]==int(id)]
     return user_msgs
 
+@cached(cache=TTLCache(maxsize=10,ttl=DELAY_CACHE))
 def get_msgs_date(mind:Optional[str]=None, maxd:Optional[str]=None)->List[MessageData]:
     """
     max min must respect format : <Y>-<M>-<D>-<?H>-<?S>-<?MS>
@@ -63,6 +65,7 @@ def get_msgs_date(mind:Optional[str]=None, maxd:Optional[str]=None)->List[Messag
 
     return history[min_index:max_index]
 
+@cached(cache=TTLCache(maxsize=10,ttl=DELAY_CACHE))
 def get_user_date(mind=None,maxd=None,id=None)->List[MessageData]:
     """
     TODO
@@ -71,6 +74,7 @@ def get_user_date(mind=None,maxd=None,id=None)->List[MessageData]:
     if not id: return history
     return [msg for msg in history if msg["author_id"]==int(id)]
 
+@cached(cache=TTLCache(maxsize=10,ttl=DELAY_CACHE))
 def get_msg_info(mind=None,maxd=None,id=None,infos=None)->List[Union[MessageData, str, int, DateList]]:
     """
     TODO
@@ -79,12 +83,14 @@ def get_msg_info(mind=None,maxd=None,id=None,infos=None)->List[Union[MessageData
     if not infos: return history
     return [msg.get(infos) for msg in history]
 
+@cached(cache=TTLCache(maxsize=10,ttl=DELAY_CACHE))
 def get_messages(mind,maxd,id,infos)->List[MessageData]:
     """
     TODO
     """
     return get_msg_info(mind, maxd, id, infos)
 
+@cached(cache=TTLCache(maxsize=10,ttl=DELAY_CACHE))
 def get_nb_msg_inter(id:int=None, inter:str=None, max:Union[int, str]=None, empty:bool=False)->List[MsgCount]:
     """
     inter format DD-HH-MM
@@ -133,21 +139,25 @@ def get_nb_msg_inter(id:int=None, inter:str=None, max:Union[int, str]=None, empt
 # Users
 def get_users(id=None): return get_user_data(id)
 
+@cached(cache=TTLCache(maxsize=10,ttl=DELAY_CACHE))
 def get_users_data():
     users = db.child("users").get().val()
     return dict(users) if users is not None else []
 
+@cached(cache=TTLCache(maxsize=10,ttl=DELAY_CACHE))
 def get_user_data(id=None):
     users = get_users_data()
     if not id : return users
     return users.get(str(id),{"Error":"404 User not found"})
 
+@cached(cache=TTLCache(maxsize=10,ttl=DELAY_CACHE))
 def get_all_users(fast=True):
     if fast: return [user_id for user_id in get_users_data()]
     return list({msg["author_id"] for msg in get_history()})
 
 # Classement
 
+@cached(cache=TTLCache(maxsize=10,ttl=DELAY_CACHE))
 def get_count():
     count = db.child("count").get().val()
     return dict(count) if count is not None else {}
