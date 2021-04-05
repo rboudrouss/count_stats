@@ -4,7 +4,7 @@ from discord import User, Client, Message, errors
 
 if __name__ == "__main__":
     args = [arg.lower() for arg in sys.argv[1:]]
-    if "help" in args:
+    if "help" in args or not args:
         print("""gets optionnal arguments (default False):
         StayOn    : bot'll stays on and listens to new message
         GetMsg    : bot'll get old messages (it'll overwrite all data)
@@ -16,6 +16,7 @@ if __name__ == "__main__":
 
 sys.path.insert(0,'../')
 
+print("Import and logging to firebase...")
 from utils.writeData import append_history, write_history, append_users
 from utils.treatment import users_not_in_data
 from utils.getData import get_all_users
@@ -23,6 +24,7 @@ from utils.constants import CHANNEL_ID
 from utils.filePaths import TOKEN_PATH
 from utils.helpers import data_from_message, data_from_user
 from utils.types import List
+print("Logged & ready to init")
 
 TOKEN = os.environ["TOKEN"] if not TOKEN_PATH.exists() else TOKEN_PATH.read_text()
 
@@ -36,9 +38,10 @@ class Bot(Client):
         self.updateAll = updateAll
         self.listen = listen
         self.allUsers = get_all_users()
+        print("Connecting to discord...")
 
     async def on_ready(self):
-        print('bot on !')
+        print('Connected to discord !')
 
         if self.getMsg : await self.get_msgs(self.getAll)
         self.allUsers = get_all_users()
