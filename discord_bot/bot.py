@@ -29,7 +29,7 @@ print("imported & ready to init")
 
 TOKEN = os.environ["TOKEN"] if not TOKEN_PATH.exists(
 ) else TOKEN_PATH.read_text()
-URL = "http://127.0.0.1:8000/api/"
+URL = "https://count-stats.herokuapp.com/api/"
 
 
 def get_all_users() -> List[int]:
@@ -52,7 +52,6 @@ class Bot(Client):
         self.stayOn = stayOn
         self.updateAll = updateAll
         self.listen = listen
-        self.allUsers = get_all_users()
         print("Connecting to discord...")
 
     async def on_ready(self):
