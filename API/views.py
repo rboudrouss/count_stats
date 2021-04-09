@@ -24,16 +24,20 @@ def write_history(request):
     if type(data) is not list:
         data = [data]
     for msg in data:
-        if msg["content"] == '':
-            msg["content"] = "NaN"
-        serializer = MessageDataSerializer(data=msg)
-        if serializer.is_valid():
-            serializer.save()
-            print(msg["message_id"])
-        else:
-            raise ValidationError(
-                f"{serializer.errors}\nyup, that's somme \
-                    quality weird data\n{msg}\n")
+        exist = MessageData.objects.filter(message_id=msg["message_id"])
+        print("\ngot", msg["message_id"])
+        if not exist:
+            print(msg["message_id"], "does not exist")
+            if msg["content"] == '':
+                msg["content"] = "NaN"
+            serializer = MessageDataSerializer(data=msg)
+            if serializer.is_valid():
+                serializer.save()
+                print(msg["message_id"], "added !")
+            else:
+                print(
+                    f"{serializer.errors}\nyup, that's somme \
+                        quality weird data\n{msg}\n")
     return Response(data)
 
 
@@ -88,7 +92,7 @@ def inter_msg(request):
             group_of_messages,
             many=True
         ).data
-    return Response(messages_dict)
+    return Response([[k, v] for k, v in messages_dict.items()])
 
 
 def messages(request):
@@ -104,16 +108,16 @@ def users(request):
         user_id = request.GET["id"]
         data = UserData.objects.filter(user_id=user_id)
     except KeyError:
-        data = UserData.objects.all()
+        data = UserData.objects.all().order_by("nb_msg")
     serializer = UserDataSerializer(data, many=True)
-    return Response(serializer.data)
+    return Response(reversed(serializer.data))
 
 
 @ api_view(['GET'])
 def users_data(request):
-    history = UserData.objects.all()
+    history = UserData.objects.all().order_by("nb_msg")
     serializer = UserDataSerializer(history, many=True)
-    return Response(serializer.data)
+    return Response(reversed(serializer.data))
 
 
 @ api_view(['POST'])
@@ -139,10 +143,3 @@ def user_data(request):
     data = UserData.objects.filter(user_id=user_id)
     serializer = UserDataSerializer(data, many=True)
     return Response(serializer.data)
-
-# Count
-
-
-def count(request):
-    # update_count()
-    pass
