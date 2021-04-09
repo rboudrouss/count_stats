@@ -1,5 +1,4 @@
 import sys
-import os
 
 if __name__ == "__main__":
     args = [arg.lower() for arg in sys.argv[1:]]
@@ -17,19 +16,16 @@ sys.path.insert(0, '../')
 
 print("Importing...")
 if 1:  # HACK a little hack for my formatter ;v
+    import os
+    import requests
+    from discord import User, Client, Message, errors
+
     from utils.types import List
     from utils.helpers import data_from_message, data_from_user
     from utils.filePaths import TOKEN_PATH
     from utils.constants import CHANNEL_ID
 
-    import requests
-    from discord import User, Client, Message, errors
-
-
-# from utils.writeData import append_history, write_history, append_users
-# from utils.treatment import users_not_in_data
-# from utils.getData import get_all_users
-print("Logged & ready to init")
+print("imported & ready to init")
 
 TOKEN = os.environ["TOKEN"] if not TOKEN_PATH.exists(
 ) else TOKEN_PATH.read_text()
