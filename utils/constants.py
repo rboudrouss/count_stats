@@ -6,7 +6,7 @@ TESTERS: List[int] = [
     128848040889942016,  # chilled
 ]
 
-CHANNEL_ID: int = 557592500722728962
+CHANNEL_ID: int = 802954710092480533
 
 # in seconds
 DELAY_COUNT_UPDATE: int = 60  # time before count update
