@@ -8,19 +8,18 @@ const UserList = (props: Props) => {
   if (!props.users) {
     return <h1>loading...</h1>;
   }
-  var { count, users, podium } = props;
+  var { users } = props;
   return (
     <div className={styles.container}>
-      {Object.keys(podium).map((top: any, i: number) => (
+      {users.map((user: any, i: number) => {
         <UserCard
           key={i}
-          user={podium[top]}
-          top={top} // FIXME
-          count={count}
-          users={users}
+          user={user.name}
+          top={user.top} // FIXME
           className={styles.card}
         />
-      ))}
+
+      })}
     </div>
   );
 };
@@ -28,7 +27,5 @@ const UserList = (props: Props) => {
 export default UserList;
 
 type Props = {
-  count: any;
   users: any;
-  podium: any;
 };

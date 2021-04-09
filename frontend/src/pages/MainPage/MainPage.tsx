@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./MainPage.module.css";
 
-import { getCount, getUsers } from "../../api";
+import { getUsers } from "../../api";
 import { Cards, Chart, UserPicker } from "../../components";
 
 class MainPage extends React.Component {
@@ -18,10 +18,8 @@ class MainPage extends React.Component {
   }
 
   async componentDidMount() {
-    const allCount = await getCount();
-    const { podium, count } = allCount ? allCount : { podium: {}, count: {} };
     const users = await getUsers();
-    this.setState({ podium, count, users });
+    this.setState({ users });
   }
 
   async selectedUserChange(selectedUser: string) {
@@ -29,10 +27,10 @@ class MainPage extends React.Component {
   }
 
   render() {
-    const { podium, count, users, selectedUser } = this.state;
+    const { users, selectedUser } = this.state;
     return (
       <div className={styles.container}>
-        <Cards podium={podium} count={count} users={users} />
+        <Cards users={users} />
         <UserPicker
           users={users}
           selectedUserChange={this.selectedUserChange}

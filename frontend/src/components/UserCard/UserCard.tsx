@@ -4,21 +4,21 @@ import styles from "./UserCard.module.css";
 import CountUp from "react-countup";
 
 const UserCard = (props: Props) => {
-  if (!props.users) {
+  if (!props.user) {
     return <h1>loading...</h1>;
   }
-  var { count, users, user, top, className } = props;
+  var { user, top, className } = props;
   return (
     <div className={styles.container}>
       <Grid item component={Card} className={className}>
         <CardContent>
-          <Avatar alt={users[user]?.name} src={users[user]?.avatar_url} />
-          <Typography variant="h5">{users[user]?.name}</Typography>
+          <Avatar alt={user?.name} src={user?.avatar_url} />
+          <Typography variant="h5">{user?.name}</Typography>
           <Typography color="textSecondary">Top {top}</Typography>
           <Typography variant="body2">
             <CountUp
               start={0}
-              end={count[user] ? count[user] : 0}
+              end={user ? user?.nb_msg : 0}
               duration={3}
             />{" "}
             messages !
@@ -28,13 +28,10 @@ const UserCard = (props: Props) => {
     </div>
   );
 };
-
 export default UserCard;
 
 type Props = {
-  user: string;
-  count: any;
-  users: any;
+  user: any;
   top: number;
   className?: any;
 };

@@ -7,35 +7,27 @@ import UserList from "../UserList/UserList";
 import { UserCard } from "..";
 
 const Cards = (props: any) => {
-  if (!props.podium) {
+  if (!props.users) {
     return <h1>loading...</h1>;
   }
   var {
-    podium: { top1, top2, top3 },
-    count,
     users,
   } = props;
   return (
     <div className={styles.container}>
       <Grid container spacing={3} justify="center">
         <UserCard
-          user={top1}
-          count={count}
-          users={users}
+          user={users[0]}
           top={1}
           className={cx(styles.card, styles.top1)}
         />
         <UserCard
-          user={top2}
-          count={count}
-          users={users}
+          user={users[1]}
           top={2}
           className={cx(styles.card, styles.top2)}
         />
         <UserCard
-          user={top3}
-          count={count}
-          users={users}
+          user={users[2]}
           top={3}
           className={cx(styles.card, styles.top3)}
         />

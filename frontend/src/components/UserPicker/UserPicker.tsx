@@ -16,7 +16,7 @@ const UserPicker = (props: any) => {
       >
         <option value="">Global</option>
         {Object.values(users).map((user: any, i: number) => (
-          <option key={i} value={user?.id}>
+          <option key={i} value={user?.user_id}>
             {user?.name}
           </option>
         ))}

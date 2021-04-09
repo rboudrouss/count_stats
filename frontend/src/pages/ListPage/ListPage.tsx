@@ -1,5 +1,5 @@
 import React from "react";
-import { getCount, getUsers } from "../../api";
+import { getUsers } from "../../api";
 import { UserList } from "../../components";
 
 import styles from "./ListPage.module.css";
@@ -12,15 +12,14 @@ class ListPage extends React.Component {
   };
 
   async componentDidMount() {
-    const { podium, count } = await getCount();
     const users = await getUsers();
-    this.setState({ podium, count, users });
+    this.setState({ users });
   }
 
   render() {
-    const {count, users, podium } = this.state
+    const { users } = this.state
     return <div className={styles.container}>
-      <UserList count={count} users={users} podium={podium}/>
+      <UserList users={users} />
     </div>;
   }
 }

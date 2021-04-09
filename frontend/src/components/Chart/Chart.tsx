@@ -5,7 +5,7 @@ import styles from "./Chart.module.css";
 import { getMsgInter } from "../../api";
 
 const Chart = (props: any) => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(['']);
 
   const selectedUser: String = props.selectedUser;
 
@@ -30,7 +30,7 @@ const Chart = (props: any) => {
         labels: data?.map((item) => item[0]),
         datasets: [
           {
-            data: data?.map((item) => item[1]),
+            data: data?.map((item) => item[1]?.length),
             label: "messages",
             borderColor: "#3333ff",
             fill: true,
