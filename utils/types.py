@@ -1,23 +1,26 @@
-from typing import List, TypedDict, Dict, Union
-
-# MaxLen : 6
-DateList = List[int]
-
+from typing import List, TypedDict, Dict, Union, Tuple, Optional
+from datetime import datetime
 # TODO FALSE, correct this
 
+Tuple
+Optional
 
-class UserData(TypedDict):
+
+class UserData(TypedDict, total=False):
     discriminator: str
     user_id: str
     name: str
     avatar_url: str
+    ghost: bool
+    nb_msg: int
+    top: int
 
 
 class MessageData(TypedDict):
     message_id: str
     author_id: str
     content: str
-    date: DateList
+    date: str
 
 
 UsersData = List[UserData]
@@ -30,7 +33,7 @@ Podium = Dict[str, str]
 
 
 class AllCount(TypedDict):
-    last_update: DateList
+    last_update: datetime  # ?
     count: Count
     podium: Podium
 

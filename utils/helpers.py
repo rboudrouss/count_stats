@@ -3,8 +3,8 @@ from discord import User, Message
 from .types import UserData, MessageData
 
 
-# def date_from_msg(msg: MessageData) -> datetime:
-#     return datetime(*msg["date"])
+def date_from_msg(msg: MessageData) -> datetime:
+    return datetime.fromisoformat(msg["date"])
 
 
 def str_from_date(date: datetime, is_hour: bool = True,
