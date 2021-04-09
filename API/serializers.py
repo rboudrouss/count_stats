@@ -9,7 +9,12 @@ class MessageDataSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = MessageData
-        fields = '__all__'
+        fields = [
+            "message_id",
+            "author_id",
+            "content",
+            "date"
+        ]
 
     def create(self, data):
         user_id = data["author_id"]
@@ -27,11 +32,25 @@ class MessageDataSerializer(serializers.ModelSerializer):
 
 
 class UserDataSerializer(serializers.ModelSerializer):
+    top = serializers.SerializerMethodField()
 
     class Meta:
         model = UserData
         ordering = ('nb_msg',)  # don't know what this does
-        fields = '__all__'
+        fields = [
+            "user_id",
+            "avatar_url",
+            "name",
+            "discriminator",
+            "nb_msg",
+            "top"
+        ]
+
+    def get_top(self, obj):
+        allUsers = reversed(UserData.objects.all().order_by("nb_msg"))
+        for i, user in enumerate(allUsers):
+            if user == obj:
+                return i+1
 
     def create(self, data):
         user_id = data.pop("user_id")
