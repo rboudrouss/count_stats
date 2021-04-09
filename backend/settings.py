@@ -138,4 +138,12 @@ STATICFILES_DIRS = [
 
 STATIC_ROOT = BASE_DIR/'staticroot/'
 
-CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOWED_ORIGINS = [
+    "http://count-stats.herokuapp.com",
+    "http://localhost:3000",
+    "http://127.0.0.1:8000"
+]
+
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
+}
