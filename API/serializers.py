@@ -17,7 +17,8 @@ class MessageDataSerializer(serializers.ModelSerializer):
         user.nb_msg += 1
         user.save()
         message = MessageData.objects.get_or_create(
-            message_id=data["message_id"])[0]
+            message_id=data["message_id"]
+        )[0]
         message.author_id = data.get("author_id", message.author_id)
         message.content = data.get("content", message.content)
         message.date = data.get("date", message.date)
@@ -29,6 +30,7 @@ class UserDataSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserData
+        ordering = ('nb_msg',)  # don't know what this does
         fields = '__all__'
 
     def create(self, data):
