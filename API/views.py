@@ -1,74 +1,148 @@
 # from django.shortcuts import render
-from utils.treatment import update_count
-from django.http import HttpResponse, JsonResponse
+# from utils.treatment import update_count
+# from django.http import HttpResponse, JsonResponse
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework.exceptions import ValidationError
+from datetime import datetime, timedelta
+from itertools import groupby
 
-from utils.getData import get_history, get_user_msgs, get_msgs_date, \
-    get_user_date, get_messages, get_user_data, get_users_data, get_count, \
-    get_users, get_nb_msg_inter
+from .serializers import MessageDataSerializer, UserDataSerializer
+from .models import MessageData, UserData
 
-# Create your views here.
-def index(request):
-    return HttpResponse("""
-    <h1>fromage</h1>
-    <p>history</p><p>users</p><p>user</p><p>usermsg</p><p>datemsg</p><p>userdate</p>
-    """)
 
-def chat_history(request):
-    return JsonResponse(get_history(), safe=False)
+@api_view(['GET'])
+def get_history(request):
+    history = MessageData.objects.all()
+    serializer = MessageDataSerializer(history, many=True)
+    return Response(serializer.data)
 
+
+@api_view(['POST'])
+def write_history(request):
+    data = request.data
+    if type(data) is not list:
+        data = [data]
+    for msg in data:
+        if msg["content"] == '':
+            msg["content"] = "NaN"
+        serializer = MessageDataSerializer(data=msg)
+        if serializer.is_valid():
+            serializer.save()
+            print(msg["message_id"])
+        else:
+            raise ValidationError(
+                f"{serializer.errors}\nyup, that's somme \
+                    quality weird data\n{msg}\n")
+    return Response(data)
+
+
+@api_view(["GET"])
 def user_msgs(request):
-    return JsonResponse(get_user_msgs(id=request.GET.get("id",None)),safe=False)
- 
+    try:
+        user_id = request.GET["id"]
+    except KeyError:
+        raise ValidationError("we kinda need an id")
+    data = MessageData.objects.filter(author_id=user_id)
+    serializer = MessageDataSerializer(data, many=True)
+    return Response(serializer.data)
+
+
+@api_view(["GET"])
 def date_msgs(request):
-    return JsonResponse(get_msgs_date(
-        mind=request.GET.get("mind",None),
-        maxd=request.GET.get("maxd",None),
-    ), safe=False)
+    try:
+        mind = datetime.fromisoformat(request.GET["mind"])
+    except KeyError:
+        raise ValidationError("we kinda need at least the mind date")
+    except ValueError:
+        raise ValidationError("eww... weird mind date")
 
-def user_date(request):
-    return JsonResponse(get_user_date(
-        mind=request.GET.get("mind",None),
-        maxd=request.GET.get("maxd",None),
-        id=request.GET.get("id",None)
-    ), safe=False)
+    maxd = request.GET.get("maxd")
+    if not maxd:
+        maxd = (mind + timedelta(days=1)).isoformat()
+    else:
+        try:
+            maxd = datetime.fromisoformat(maxd)
+        except ValueError:
+            raise ValidationError("eww... weird maxd date")
+    history = MessageData.objects.filter(date__range=[mind, maxd])
+    serializer = MessageDataSerializer(history, many=True)
+    return Response(serializer.data)
 
-def msg_info(request):
-    return JsonResponse(get_messages(
-        mind=request.GET.get("mind",None),
-        maxd=request.GET.get("maxd",None),
-        id=request.GET.get("id",None),
-        infos= request.GET.get("info",None),
-    ), safe=False)
 
+@api_view(['GET'])
 def inter_msg(request):
-    return JsonResponse(get_nb_msg_inter(
-        id=request.GET.get("id",None),
-        inter=request.GET.get("inter",None),
-        empty=request.GET.get("empty", "false").lower()!="false", # TODO const
-        max=request.GET.get("max",None),
-    ), safe=False)
+    id = request.GET.get("id")
+    if id:
+        history = MessageData.objects.filter(author_id=id)
+    else:
+        history = MessageData.objects.all()
+
+    history_by_date = groupby(history.iterator(), lambda m: m.date.date())
+
+    messages_dict = {}
+
+    for date, group_of_messages in history_by_date:
+        dict_key = date.strftime('%Y-%m-%d')
+        messages_dict[dict_key] = MessageDataSerializer(
+            group_of_messages,
+            many=True
+        ).data
+    return Response(messages_dict)
+
 
 def messages(request):
     # TODO update this one
-    return JsonResponse(get_messages(
-        mind=request.GET.get("mind",None),
-        maxd=request.GET.get("maxd",None),
-        id=request.GET.get("id",None),
-        infos= request.GET.get("info",None),
-    ), safe=False)
+    pass
 
 # Users
+
+
+@ api_view(['GET'])
 def users(request):
-    # TODO update this one
-    return JsonResponse(get_users(id=request.GET.get("id",None)))
+    try:
+        user_id = request.GET["id"]
+        data = UserData.objects.filter(user_id=user_id)
+    except KeyError:
+        data = UserData.objects.all()
+    serializer = UserDataSerializer(data, many=True)
+    return Response(serializer.data)
 
+
+@ api_view(['GET'])
 def users_data(request):
-    return JsonResponse(get_users_data())
+    history = UserData.objects.all()
+    serializer = UserDataSerializer(history, many=True)
+    return Response(serializer.data)
 
+
+@ api_view(['POST'])
+def write_users(request):
+    data = request.data
+    if type(data) is not list:
+        data = [data]
+    for msg in data:
+        serializer = UserDataSerializer(data=msg)
+        if serializer.is_valid():
+            serializer.save()
+        else:
+            print(f"{serializer.errors}\nWarning, got weird data : \n{msg}\n")
+    return Response(data)
+
+
+@ api_view(["GET"])
 def user_data(request):
-    return JsonResponse(get_user_data(id=request.GET.get("id",None)))
+    try:
+        user_id = request.GET["id"]
+    except KeyError:
+        raise ValidationError("we kinda need an id")
+    data = UserData.objects.filter(user_id=user_id)
+    serializer = UserDataSerializer(data, many=True)
+    return Response(serializer.data)
 
 # Count
+
+
 def count(request):
-    update_count()
-    return JsonResponse(get_count())
+    # update_count()
+    pass
