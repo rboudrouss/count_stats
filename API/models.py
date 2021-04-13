@@ -20,7 +20,7 @@ class MessageData(models.Model):
     message_id = models.CharField(max_length=20)
     author_id = models.CharField(max_length=20, default="0")
     content = models.CharField(max_length=2000, default="nan")
-    date = models.DateTimeField(auto_now=True)
+    date = models.DateTimeField(default=None)
 
     def __repr__(self):
         return f"<Message id={self.message_id} date={self.date}>"
