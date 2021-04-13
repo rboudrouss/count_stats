@@ -23,6 +23,5 @@ urlpatterns = [
     re_path(r'^api/', include('API.urls')),
     re_path(r'^admin/', admin.site.urls),
     path('', TemplateView.as_view(template_name="index.html")),
-    path('list',TemplateView.as_view(template_name="index.html")), 
+    path('list', TemplateView.as_view(template_name="index.html")),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-
