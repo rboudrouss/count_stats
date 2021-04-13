@@ -6,8 +6,8 @@ if [ $conf = 'y' -o $conf = 'Y' ]; then
     echo "DATABASE YOOTED !"
 fi
 
-find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
-find . -path "*/migrations/*.pyc"  -delete
+find . -path "API/migrations/*.py" -not -name "__init__.py" -delete
+find . -path "API/migrations/*.pyc"  -delete
 echo "MIGRATIONS YOOTED ! (making new ones)"
 python manage.py makemigrations && python manage.py migrate
 echo "yeeting out the program..."
