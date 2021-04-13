@@ -13,7 +13,7 @@ from .models import MessageData, UserData
 
 @api_view(['GET'])
 def get_history(request):
-    history = MessageData.objects.all()
+    history = MessageData.objects.all().order_by("date")
     serializer = MessageDataSerializer(history, many=True)
     return Response(serializer.data)
 
@@ -81,6 +81,8 @@ def inter_msg(request):
         history = MessageData.objects.filter(author_id=id)
     else:
         history = MessageData.objects.all()
+
+    history = history.order_by("date")
 
     history_by_date = groupby(history.iterator(), lambda m: m.date.date())
 
