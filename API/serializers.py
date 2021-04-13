@@ -43,7 +43,8 @@ class UserDataSerializer(serializers.ModelSerializer):
             "name",
             "discriminator",
             "nb_msg",
-            "top"
+            "top",
+            "ghost"
         ]
 
     def get_top(self, obj):
