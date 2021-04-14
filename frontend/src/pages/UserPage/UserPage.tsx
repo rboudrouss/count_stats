@@ -3,8 +3,8 @@ import React from "react";
 
 import styles from "./UserPage.module.css";
 
-class UserPage extends React.Component <Props,State> {
-  constructor(props: Props) {
+class UserPage extends React.Component {
+  constructor(props: {}) {
     super(props);
   }
 
@@ -14,16 +14,3 @@ class UserPage extends React.Component <Props,State> {
 }
 
 export default UserPage;
-// TODO TYPES
-type Props = {
-  count:any,
-  podium:any,
-  users:any,
-}
-
-type State = {
-  count:any,
-  podium:any,
-  users:any,
-  selectedUser:string
-}

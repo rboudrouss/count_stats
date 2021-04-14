@@ -1,16 +1,9 @@
 import axios from "axios";
+import { Message, User, Inter } from "../types"
 
-const makefunc = (url: String) => {
-    const API_URL = "https://count-stats.herokuapp.com/api/"; //TODO hardcoded for now
-    const func = async (args?: {
-        id?: String,
-        mind?: String,
-        maxd?: String,
-        info?: String,
-        max?: number,
-        empty?: boolean,
-        inter?: String
-    }) => {
+const makefunc = <Args, Out>(url: String) => {
+    const API_URL = "http://127.0.0.1:8000/api/"; //TODO hardcoded for now
+    const func = async (args?: Args) => {
         let api_url = API_URL + url;
         if (args) {
             api_url += "?"
@@ -23,7 +16,7 @@ const makefunc = (url: String) => {
         try {
             console.log(`calling ${api_url}`)
             const response = await axios.get(api_url);
-            return response.data; // TODO find a way to type this 
+            return response.data as Out; // TODO find a way to type this 
         } catch (error) {
             console.log(error)
         }
@@ -33,49 +26,19 @@ const makefunc = (url: String) => {
 
 // Message
 
-export const getHistory = makefunc("message/history");
-export const getUserMsg = makefunc("message/usermsg");
-export const getDateMsg = makefunc("message/datemsg");
+export const getHistory = makefunc<null, Message[]>("message/history");
+export const getUserMsg = makefunc<{ id: string }, Message[]>("message/usermsg");
+export const getDateMsg = makefunc<{ mind?: string, maxd?: string }, Message[]>("message/datemsg");
+export const getMsgInter = makefunc<{ id?: string }, Inter>("message/inter");
 // export const getUserDate = makefunc("message/userdate");
-export const getMsgInfo = makefunc("message/msginfo");
-export const getMsgInter = makefunc("message/inter");
-export const getMessage = makefunc("message");
+// export const getMsgInfo = makefunc("message/msginfo");
+// export const getMessage = makefunc("message");
 
 // users
-export const getAllUsers = makefunc("user/users");
-export const getUser = makefunc("user/user");
-export const getUsers = makefunc("user");
+export const getUsers = makefunc<null, User[]>("user/users");
+// export const getUser = makefunc("user/user");
+// export const getUsers = makefunc("user");
 
 
 
-interface Count {
-    last_update: number[];
-    podium: {
-        top1: String;
-        top2: String;
-        top3: String;
-    };
-    count: {
-        String: number
-    }
-}
 
-interface Message {
-    message_id: number;
-    author_id: number;
-    content: String;
-    date: number[];
-
-}
-
-interface User {
-    avatar_url: String
-    name: String
-    discriminator: String
-    id: String
-
-}
-
-interface Users {
-    String: User
-}

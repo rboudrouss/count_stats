@@ -1,10 +1,14 @@
 import { NativeSelect, FormControl } from "@material-ui/core";
+import { User } from "../../types"
 
 import styles from "./UserPicker.module.css";
 
-const UserPicker = (props: any) => {
-  const users = props.users ? props.users : {};
-  const selectedUserChange: any = props.selectedUserChange;
+const UserPicker = (props: {
+  users: User[],
+  selectedUserChange: (selectedUser: string) => Promise<void>
+}) => {
+  const users: User[] = props.users ?? [];
+  const selectedUserChange = props.selectedUserChange;
 
   return (
     <FormControl className={styles.formControl}>
@@ -15,7 +19,7 @@ const UserPicker = (props: any) => {
         }}
       >
         <option value="">Global</option>
-        {Object.values(users).map((user: any, i: number) => (
+        {users.map((user: User, i: number) => (
           <option key={i} value={user?.user_id}>
             {user?.name}
           </option>

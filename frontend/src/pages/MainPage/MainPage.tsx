@@ -3,16 +3,15 @@ import styles from "./MainPage.module.css";
 
 import { getUsers } from "../../api";
 import { Cards, Chart, UserPicker } from "../../components";
+import { User } from "../../types"
 
 class MainPage extends React.Component {
-  state = {
-    count: {},
-    podium: {},
-    users: {},
+  state: { users: User[], selectedUser: string } = {
+    users: [],
     selectedUser: "",
   };
 
-  constructor(props: any) {
+  constructor(props: {}) {
     super(props);
     this.selectedUserChange = this.selectedUserChange.bind(this);
   }

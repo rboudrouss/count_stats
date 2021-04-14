@@ -1,14 +1,13 @@
 import React from "react";
 import { getUsers } from "../../api";
 import { UserList } from "../../components";
+import { User } from "../../types"
 
 import styles from "./ListPage.module.css";
 
 class ListPage extends React.Component {
-  state = {
-    users: {},
-    count: {},
-    podium: {},
+  state: { users: User[] } = {
+    users: [],
   };
 
   async componentDidMount() {
@@ -25,17 +24,3 @@ class ListPage extends React.Component {
 }
 
 export default ListPage;
-
-// TODO TYPES
-type Props = {
-  count: any;
-  podium: any;
-  users: any;
-};
-
-type State = {
-  count: any;
-  podium: any;
-  users: any;
-  selectedUser: string;
-};

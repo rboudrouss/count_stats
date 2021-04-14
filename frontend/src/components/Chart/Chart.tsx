@@ -3,17 +3,17 @@ import { Line } from "react-chartjs-2";
 
 import styles from "./Chart.module.css";
 import { getMsgInter } from "../../api";
+import { Inter } from "../../types"
 
-const Chart = (props: any) => {
-  const [data, setData] = useState(['']);
+const Chart = (props: { selectedUser: string }) => {
+  const [data, setData] = useState<Inter>([]);
 
-  const selectedUser: String = props.selectedUser;
+  const selectedUser: string = props.selectedUser;
 
   useEffect(() => {
     const fetchAPI = async () => {
       const data1 = await getMsgInter({
         // max: 10,
-        empty: true,
         id: selectedUser,
       });
       if (data1) {
