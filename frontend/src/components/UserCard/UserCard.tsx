@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardContent, Typography, Grid, Avatar } from "@material-ui/core";
+import { Card, CardContent, Typography, Grid, Avatar, Box } from "@material-ui/core";
 import styles from "./UserCard.module.css";
 import CountUp from "react-countup";
 import { User } from "../../types"
@@ -13,17 +13,22 @@ const UserCard = (props: { user: User, className: string }) => {
     <div className={styles.container}>
       <Grid item component={Card} className={className}>
         <CardContent>
+          <Box mb={1}>
+            <Typography color="textSecondary">Top {user?.top}</Typography>
+          </Box>
           <Avatar alt={user?.name} src={user?.avatar_url} />
-          <Typography variant="h5">{user?.name}</Typography>
-          <Typography color="textSecondary">Top {user?.top}</Typography>
           <Typography variant="body2">
+            avec{" "}
             <CountUp
               start={0}
-              end={user?.nb_msg ?? 0}
+              end={user.nb_msg ?? 0}
               duration={3}
             />{" "}
             messages !
           </Typography>
+          <Box mt={2}>
+            <Typography variant="h5">{user?.name}</Typography>
+          </Box>
         </CardContent>
       </Grid>
     </div>

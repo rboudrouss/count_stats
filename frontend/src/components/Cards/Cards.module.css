@@ -1,21 +1,30 @@
 .container {
-  margin: 50px 0;
+  padding: 40px 10px;
+  width: 60%;
+  justify-content: space-between;
+  border: 1px solid red;
+  box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px, rgb(47, 51, 53) 6px 4px 25px;
 }
 
 .card {
   margin: 0 2% !important;
+  width: 220px;
+  height: 100%;
 }
 
 .top1 {
   border-bottom: 10px solid rgba(255, 0, 0, 0.5);
+  translate: 0 -20px;
 }
 
 .top2 {
   border-bottom: 10px solid rgba(0, 255, 13, 0.5);
+  translate: 0 0;
 }
 
 .top3 {
   border-bottom: 10px solid rgba(0, 255, 242, 0.5);
+  translate: 0 20px;
 }
 
 @media (max-width:770px){
