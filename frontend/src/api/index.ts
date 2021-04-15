@@ -16,7 +16,7 @@ const makefunc = <Args, Out>(url: String) => {
         try {
             console.log(`calling ${api_url}`)
             const response = await axios.get(api_url);
-            return response.data as Out; // TODO find a way to type this 
+            return response.data as Out; 
         } catch (error) {
             console.log(error)
         }
