@@ -1,9 +1,14 @@
 
 .container{
+    display: grid;
     width: 100%;
+    justify-items: center;
+    grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
+    gap: 1rem 0.5rem;
+    margin: 1rem 0;
 }
 
 .card{
-    margin: 20px;
-    /* border: 1px dotted red; */
+    width: 200px;
+    height: 200px;
 }

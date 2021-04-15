@@ -1,12 +1,10 @@
 import React from "react";
-import { ThemeProvider } from '@material-ui/styles';
 import { Typography, Grid } from "@material-ui/core";
 import styles from "./MainPage.module.css";
 
 import { getUsers } from "../../api";
 import { Cards, Chart, UserPicker, TopBar } from "../../components";
 import { User } from "../../types"
-import theme from "../../theme"
 
 class MainPage extends React.Component {
   state: { users: User[], selectedUser: string } = {
@@ -31,7 +29,7 @@ class MainPage extends React.Component {
   render() {
     const { users, selectedUser } = this.state;
     return (
-      <ThemeProvider theme={theme}>
+      <>
         <TopBar />
         <div className={styles.container}>
           <section className={styles.intro}>
@@ -49,13 +47,15 @@ class MainPage extends React.Component {
             </Typography>
             <Cards users={users} />
           </section>
-          <UserPicker
-            users={users}
-            selectedUserChange={this.selectedUserChange}
-          />
-          <Chart selectedUser={selectedUser} />
+          <section className={styles.chart}>
+            <UserPicker
+              users={users}
+              selectedUserChange={this.selectedUserChange}
+            />
+            <Chart selectedUser={selectedUser} />
+          </section>
         </div>
-      </ThemeProvider>
+      </>
     );
   }
 }

@@ -14,20 +14,18 @@ const Cards = (props: { users: User[] }) => {
   } = props;
   return (
     <div className={styles.container}>
-      <Grid container spacing={3} justify="space-evenly">
-        <UserCard
-          user={users[0]}
-          className={cx(styles.card, styles.top1)}
-        />
-        <UserCard
-          user={users[2]}
-          className={cx(styles.card, styles.top3)}
-        />
-        <UserCard
-          user={users[1]}
-          className={cx(styles.card, styles.top2)}
-        />
-      </Grid>
+      <UserCard
+        user={users[2]}
+        className={cx(styles.card, styles.top3)}
+      />
+      <UserCard
+        user={users[0]}
+        className={cx(styles.card, styles.top1)}
+      />
+      <UserCard
+        user={users[1]}
+        className={cx(styles.card, styles.top2)}
+      />
     </div>
   );
 };

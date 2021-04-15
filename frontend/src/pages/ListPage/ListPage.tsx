@@ -1,6 +1,6 @@
 import React from "react";
 import { getUsers } from "../../api";
-import { UserList } from "../../components";
+import { UserList, TopBar } from "../../components";
 import { User } from "../../types"
 
 import styles from "./ListPage.module.css";
@@ -17,9 +17,12 @@ class ListPage extends React.Component {
 
   render() {
     const { users } = this.state
-    return <div className={styles.container}>
-      <UserList users={users} />
-    </div>;
+    return (
+      <div className={styles.container}>
+        <TopBar />
+        <UserList users={users} />
+      </div>
+    );
   }
 }
 
