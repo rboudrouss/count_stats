@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Line } from "react-chartjs-2";
+import { Line, Bar } from "react-chartjs-2";
 
 import styles from "./Chart.module.css";
 import { getMsgInter } from "../../api";
@@ -25,21 +25,24 @@ const Chart = (props: { selectedUser: string }) => {
   }, [selectedUser]); // disabled autoupdate
 
   const lineChart = data ? (
-    <Line
+    <Bar
       data={{
         labels: data?.map((item) => item[0]),
         datasets: [
           {
             data: data?.map((item) => item[1]?.length),
             label: "messages",
-            borderColor: "#3333ff",
+            backgroundColor: "#2f8fc3",
+            borderColor: "#FFFFFF",
+            barPercentage: 1.0,
+            categoryPercentage: 1.0,
             fill: true,
           },
         ],
       }}
     />
   ) : (
-    <Line
+    <Bar
       data={{
         labels: [],
         datasets: [
