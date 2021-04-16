@@ -1,11 +1,9 @@
-# from django.shortcuts import render
-# from utils.treatment import update_count
-# from django.http import HttpResponse, JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError
 from datetime import datetime, timedelta
 from itertools import groupby
+from tqdm import tqdm
 
 from .serializers import MessageDataSerializer, UserDataSerializer
 from .models import MessageData, UserData
@@ -127,7 +125,7 @@ def write_users(request):
     data = request.data
     if type(data) is not list:
         data = [data]
-    for msg in data:
+    for msg in (tqdm(data) if len(data) > 20 else data):
         serializer = UserDataSerializer(data=msg)
         if serializer.is_valid():
             serializer.save()
