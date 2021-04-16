@@ -19,9 +19,9 @@ just a non-minimalistic website that shows statistics about the activity of a di
 ## Todo list
 
 - [X] SSL certificat 
-- [ ] ~~bot'll noice every message that has 69~~
-- [ ] individual user pages
+- [X] ~~bot'll noice every message that has 69~~
 - [ ] a working navigation button
+- [ ] individual user pages
 - [ ] More tests and frontend tests !
 - [ ] Automatic build in VPS
 - [ ] MORE STATS \o/
