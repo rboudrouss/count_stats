@@ -9,6 +9,7 @@ if __name__ == "__main__":
         GetAll    : bot'll fetch ALL messages on start (recommended)
         UpdateAll : bot'll update all users data
         Listen : bot'll listen to new messages and add them to DB
+        Noice : noice
         """)
         exit(0)
 
@@ -23,13 +24,13 @@ if 1:  # HACK a little hack for my formatter ;v
     from utils.types import List
     from utils.helpers import data_from_message, data_from_user
     from utils.filePaths import TOKEN_PATH
-    from utils.constants import CHANNEL_ID
+    from utils.constants import CHANNEL_ID, NOICE_ID
 
 print("imported & ready to init")
 
 TOKEN = os.environ["TOKEN"] if not TOKEN_PATH.exists(
 ) else TOKEN_PATH.read_text()
-URL = "https://count-stats.herokuapp.com/api/"
+URL = "https://count.rboud.ml//api/"
 
 
 def get_all_users() -> List[int]:
@@ -44,7 +45,7 @@ def users_not_in_data() -> List[int]:
 
 class Bot(Client):
     def __init__(self, getMsg=True, getAll=False, stayOn=False,
-                 updateAll=False, listen=False, *args, **kwargs):
+                 updateAll=False, listen=False, noice=False, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
         self.getMsg = getMsg
@@ -52,10 +53,13 @@ class Bot(Client):
         self.stayOn = stayOn
         self.updateAll = updateAll
         self.listen = listen
+        self.noice = noice
         print("Connecting to discord...")
 
     async def on_ready(self):
         print('Connected to discord !')
+
+        self.noice_emoji = self.get_emoji(NOICE_ID)
 
         if self.getMsg:
             await self.get_msgs(self.getAll)
@@ -78,9 +82,17 @@ class Bot(Client):
         )  # .flatten()
 
         # get all messages
-        data = [
-            data_from_message(message) async for message in msg_hst
-        ]
+        if not noice:
+            data = [
+                data_from_message(message) async for message in msg_hst
+            ]
+        else:
+            data = []
+            async for message in msg_hst:
+                data.append(data_from_message(message))
+                if "69" in message.content:
+                    await message.add_reaction(self.noice_emoji)
+
         response = requests.post(URL+"write/history", json=data)
         print(response.status_code)
         if response.status_code == 200:
@@ -109,6 +121,9 @@ class Bot(Client):
     async def on_message(self, message: Message):
         if not self.listen:
             return
+        if self.noice:
+            if message.channel.id == CHANNEL_ID and "69" in message.content:
+                await message.add_reaction(self.noice_emoji)
         if message.channel.id == CHANNEL_ID:
             print(f"new message from channel !\n content : {message.content}")
             print(f"user : {message.author.display_name}")
@@ -136,10 +151,12 @@ if __name__ == "__main__":
     getMsg = "getmsg" in args
     updateAll = "updateall" in args
     listen = "listen" in args
+    noice = "noice" in args
     run_bot(
         stayOn=stayOn,
         getAll=getAll,
         getMsg=getMsg,
         updateAll=updateAll,
-        listen=listen
+        listen=listen,
+        noice=noice
     )
