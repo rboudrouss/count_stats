@@ -8,8 +8,8 @@ if __name__ == "__main__":
         GetMsg    : bot'll get old messages (it'll overwrite all data)
         GetAll    : bot'll fetch ALL messages on start (recommended)
         UpdateAll : bot'll update all users data
-        Listen : bot'll listen to new messages and add them to DB
-        Noice : noice
+        Listen    : bot'll listen to new messages and add them to DB
+        Noice     : nOiCe
         """)
         exit(0)
 
