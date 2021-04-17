@@ -1,6 +1,6 @@
 import React from "react";
 import { getUsers } from "../../api";
-import { UserList, TopBar } from "../../components";
+import { UserList } from "../../components";
 import { User } from "../../types"
 
 import styles from "./ListPage.module.css";
