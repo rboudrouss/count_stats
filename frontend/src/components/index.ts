@@ -4,3 +4,4 @@ export { default as UserPicker } from "./UserPicker/UserPicker";
 export { default as UserList } from "./UserList/UserList";
 export { default as UserCard } from "./UserCard/UserCard";
 export { default as TopBar } from "./TopBar/TopBar";
+export { default as Footer } from "./Footer/Footer";

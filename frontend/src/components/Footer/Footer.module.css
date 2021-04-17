@@ -1,0 +1,21 @@
+.footer{
+    padding: 2.5em 0;
+    background: #111;
+    text-align: center;
+}
+.footer a{
+    text-decoration: none;
+    color: white;
+    margin: 0 2rem;
+}
+
+.social_list {
+	list-style: none;
+	display: flex;
+	justify-content: center;
+	margin: 2em 0 0;
+	padding: 0;
+}
+.item {
+	margin: 0 .5em;
+}
