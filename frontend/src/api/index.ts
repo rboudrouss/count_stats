@@ -16,7 +16,7 @@ const makefunc = <Args, Out>(url: String) => {
         try {
             console.log(`calling ${api_url}`)
             const response = await axios.get(api_url);
-            return response.data as Out; 
+            return response.data as Out;
         } catch (error) {
             console.log(error)
         }
@@ -36,7 +36,10 @@ export const getMsgInter = makefunc<{ id?: string }, Inter>("message/inter");
 
 // users
 export const getUsers = makefunc<null, User[]>("user/users");
-// export const getUser = makefunc("user/user");
+export const getUser = async (id: string) => {
+    const temp = await makefunc<{ id: string }, User[]>("user/user")({ id })
+    return temp ? temp[0] : undefined
+};
 // export const getUsers = makefunc("user");
 
 
