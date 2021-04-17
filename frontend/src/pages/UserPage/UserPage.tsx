@@ -1,36 +1,55 @@
 
 import React from "react";
 import styles from "./UserPage.module.css";
-import { TopBar } from "../../components"
-import { User } from "../../types"
-import { getUsers } from "../../api";
+import { User, Message } from "../../types"
+import { Chart, UserCard } from "../../components"
+import { getUsers, getUserMsg, getUser } from "../../api";
+import { Card, CardContent, Typography, Grid, Avatar, Box } from "@material-ui/core";
 
 class UserPage extends React.Component {
-  state: { id: string, users: User[] } = {
+  state: { id: string, user: User | null, userMsg: Message[] } = {
     id: (this.props as any).match.params.id as string, // HACK
-    users: []
+    user: null,
+    userMsg: [],
   }
 
   async componentDidMount() {
-    const users = await getUsers();
-    this.setState({ users });
-  }
+    let userMsg: Message[] = [];
+    let user = await getUser(this.state.id);
+    if (user) {
+      userMsg = await getUserMsg({ id: this.state.id }) ?? [];
+    }
 
-  constructor(props: {}) {
-    super(props);
+    this.setState({ userMsg, user });
   }
 
 
   render() {
-    const { users, id } = this.state;
-    var exits = false;
-    for (const user of users) {
-      if (user.user_id === id) {
-        exits = true;
-      }
-    }
+    const { user, userMsg } = this.state;
     return (
       <div className={styles.container}>
+        {
+          user ? <>
+            <section className={styles.presentation}>
+              <div className={styles.mainp}>
+                <Avatar alt={user.name} src={user.avatar_url} className={styles.avatar} />
+                <Typography className={styles.name} color="inherit" variant="h5">
+                  {user.name}#{user.discriminator}
+                </Typography>
+              </div>
+            </section>
+            <section className={styles.chart}>
+              <Chart selectedUser={user.user_id} />
+            </section>
+          </> : <>
+            <section className={styles.presentation}>
+              <Typography className={styles.name} color="inherit" variant="h5">
+                User Not Found
+              </Typography>
+            </section>
+
+          </>
+        }
       </div>
     );
   }
