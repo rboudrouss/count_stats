@@ -1,0 +1,22 @@
+.toolbar{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    width: 100%;
+}
+
+.links{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: row;
+}
+
+.links a{
+    margin: 0 2rem;
+}
+
+.links a{
+    text-decoration: none;
+}
