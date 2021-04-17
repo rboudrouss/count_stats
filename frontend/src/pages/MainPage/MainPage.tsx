@@ -30,7 +30,6 @@ class MainPage extends React.Component {
     const { users, selectedUser } = this.state;
     return (
       <>
-        <TopBar />
         <div className={styles.container}>
           <section className={styles.intro}>
             <Typography variant="h4" color="secondary">

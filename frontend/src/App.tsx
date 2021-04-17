@@ -11,11 +11,13 @@ import {
 } from "react-router-dom";
 
 import { MainPage, ListPage, UserPage } from "./pages";
+import { TopBar } from "./components";
 
 class App extends React.Component {
   render() {
     return (
       <ThemeProvider theme={theme}>
+        <TopBar />
         <Router>
           <Switch>
             <Route exact path="/" component={MainPage} />

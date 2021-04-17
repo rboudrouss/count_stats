@@ -19,7 +19,6 @@ class ListPage extends React.Component {
     const { users } = this.state
     return (
       <div className={styles.container}>
-        <TopBar />
         <UserList users={users} />
       </div>
     );

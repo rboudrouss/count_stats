@@ -31,7 +31,6 @@ class UserPage extends React.Component {
     }
     return (
       <div className={styles.container}>
-        <TopBar />
       </div>
     );
   }
