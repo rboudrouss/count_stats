@@ -19,17 +19,16 @@
 
 .top1 {
   border-bottom: 10px solid rgba(255, 0, 0, 0.5);
-  translate: 0 -20px;
+  transform: translate(0, -20px);
 }
 
 .top2 {
   border-bottom: 10px solid rgba(0, 255, 13, 0.5);
-  translate: 0 0;
 }
 
 .top3 {
   border-bottom: 10px solid rgba(0, 255, 242, 0.5);
-  translate: 0 20px;
+  transform: translate(0, 20px);
 }
 
 @media (max-width:700px){
