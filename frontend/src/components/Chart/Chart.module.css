@@ -3,7 +3,6 @@
   display: flex;
   justify-content: center;
   width: 75%;
-  box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px, rgb(47, 51, 53) 6px 4px 25px;
 }
 
 @media (max-width:700px){
