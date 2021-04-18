@@ -25,6 +25,7 @@ just a non-minimalistic website that shows statistics about the activity of a di
 - [ ] More tests and frontend tests !
 - [X] Automatic build in VPS
 - [ ] MORE STATS \o/
+- [ ] Documentation :eyes:
 - [ ] adding personnalised fonctionnalities with discord Oauth2 and add possibility to delete your informations
 - [ ] Using Postges as main DataBase
 - [ ] verify UI support on all browsers
