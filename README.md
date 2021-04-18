@@ -21,9 +21,9 @@ just a non-minimalistic website that shows statistics about the activity of a di
 - [X] SSL certificat 
 - [X] ~~bot'll noice every message that has 69~~
 - [X] a working navigation button
-- [ ] individual user pages
+- [X] individual user pages
 - [ ] More tests and frontend tests !
-- [ ] Automatic build in VPS
+- [X] Automatic build in VPS
 - [ ] MORE STATS \o/
 - [ ] adding personnalised fonctionnalities with discord Oauth2 and add possibility to delete your informations
 - [ ] Using Postges as main DataBase
