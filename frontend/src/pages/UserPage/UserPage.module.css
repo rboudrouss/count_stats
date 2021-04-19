@@ -19,6 +19,38 @@
     align-items: center;
 }
 
+.stats{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #111;
+}
+
+.cards{
+    width: 80%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 2rem 0;
+}
+
+.card {
+    height: 100%;
+    width: 200px;
+}
+
 .avatar{
     padding: 0.5rem;
+}
+
+/* TODO responsivness  */
+@media (max-width:700px){
+    .cards{
+        width: 95%;
+        flex-direction: column;
+    }
+    .card{
+        margin: 1rem 0;
+    }
 }
