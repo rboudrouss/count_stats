@@ -1,4 +1,7 @@
 .container{
-    min-height: 250px;
-    /* TODO find a way to extend to whole page */
+    min-height: 70vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
 }

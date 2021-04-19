@@ -1,5 +1,3 @@
-import React from "react";
-import { Grid } from "@material-ui/core";
 import styles from "./Cards.module.css";
 import cx from "classnames";
 import { UserCard } from "..";

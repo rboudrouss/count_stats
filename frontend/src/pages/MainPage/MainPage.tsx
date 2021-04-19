@@ -1,15 +1,16 @@
 import React from "react";
-import { Typography, Grid } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import styles from "./MainPage.module.css";
 
 import { getUsers } from "../../api";
-import { Cards, Chart, UserPicker, TopBar } from "../../components";
+import { Cards, Chart, UserPicker, Loading } from "../../components";
 import { User } from "../../types"
 
 class MainPage extends React.Component {
-  state: { users: User[], selectedUser: string } = {
+  state: { users: User[], selectedUser: string, loading: boolean } = {
     users: [],
     selectedUser: "",
+    loading: true
   };
 
   constructor(props: {}) {
@@ -19,7 +20,7 @@ class MainPage extends React.Component {
 
   async componentDidMount() {
     const users = await getUsers();
-    this.setState({ users });
+    this.setState({ users, loading: false });
   }
 
   async selectedUserChange(selectedUser: string) {
@@ -27,7 +28,7 @@ class MainPage extends React.Component {
   }
 
   render() {
-    const { users, selectedUser } = this.state;
+    const { users, selectedUser, loading } = this.state;
     return (
       <>
         <div className={styles.container}>
@@ -40,19 +41,28 @@ class MainPage extends React.Component {
               channel discord.
             </Typography>
           </section>
-          <section className={styles.cards}>
-            <Typography variant="h5" color="textSecondary">
-              Podium
-            </Typography>
-            <Cards users={users} />
-          </section>
-          <section className={styles.chart}>
-            <UserPicker
-              users={users}
-              selectedUserChange={this.selectedUserChange}
-            />
-            <Chart selectedUser={selectedUser} />
-          </section>
+          {loading
+            ?
+            <section className={styles.loading}>
+              <Loading loading={loading} />
+            </section>
+            :
+            <>
+              <section className={styles.cards}>
+                <Typography variant="h5" color="textSecondary">
+                  Podium
+                </Typography>
+                <Cards users={users} />
+              </section>
+              <section className={styles.chart}>
+                <UserPicker
+                  users={users}
+                  selectedUserChange={this.selectedUserChange}
+                />
+                <Chart selectedUser={selectedUser} />
+              </section>
+            </>
+          }
         </div>
       </>
     );

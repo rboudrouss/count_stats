@@ -1,8 +1,12 @@
-.presentation{
+.presentation, .loading, .chart{
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
+}
+
+.loading{
+    padding: 30vh 0;
 }
 
 .mainp{
@@ -10,13 +14,6 @@
     align-items: center;
     padding: 2rem 0;;
     flex-direction: row;
-}
-
-.chart{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .stats{
@@ -35,7 +32,7 @@
     margin: 2rem 0;
 }
 
-.card {
+.card{
     height: 100%;
     width: 200px;
 }

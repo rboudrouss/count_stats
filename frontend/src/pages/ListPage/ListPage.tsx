@@ -1,25 +1,32 @@
 import React from "react";
 import { getUsers } from "../../api";
-import { UserList } from "../../components";
+import { Loading, UserList } from "../../components";
 import { User } from "../../types"
 
 import styles from "./ListPage.module.css";
 
 class ListPage extends React.Component {
-  state: { users: User[] } = {
+  state: { users: User[], loading: boolean } = {
     users: [],
+    loading: true,
   };
 
   async componentDidMount() {
     const users = await getUsers();
-    this.setState({ users });
+    this.setState({ users, loading: false });
   }
 
   render() {
-    const { users } = this.state
+    const { users, loading } = this.state
     return (
       <div className={styles.container}>
-        <UserList users={users} />
+        {
+          loading
+            ?
+            <Loading loading={loading} />
+            :
+            <UserList users={users} />
+        }
       </div>
     );
   }
