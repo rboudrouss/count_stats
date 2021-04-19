@@ -40,6 +40,15 @@ const Chart = (props: { selectedUser: string }) => {
           },
         ],
       }}
+      options={{
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      }}
     />
   ) : (
     <Bar
