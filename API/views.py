@@ -44,7 +44,7 @@ def user_msgs(request):
         user_id = request.GET["id"]
     except KeyError:
         raise ValidationError("we kinda need an id")
-    data = MessageData.objects.filter(author_id=user_id)
+    data = MessageData.objects.filter(author_id=user_id).order_by("date")
     serializer = MessageDataSerializer(data, many=True)
     return Response(serializer.data)
 
