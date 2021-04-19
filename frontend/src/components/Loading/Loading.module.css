@@ -1,0 +1,11 @@
+.container{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.text{
+    margin: 30px 0;
+}
