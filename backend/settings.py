@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+from typing import List
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,7 +28,6 @@ SECRET_KEY = '6zvwt4qs^jk5m=&q*z_k018ue_vr+)$c7(s%(@)8hj&@^tqs&i'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    "count-stats.herokuapp.com",
     "localhost",
     "127.0.0.1",
 ]
@@ -138,11 +138,7 @@ STATICFILES_DIRS = [
 
 STATIC_ROOT = BASE_DIR/'staticroot/'
 
-CORS_ALLOWED_ORIGINS = [
-    "http://count-stats.herokuapp.com",
-    "http://localhost:3000",
-    "http://127.0.0.1:8000"
-]
+CORS_ALLOWED_ORIGINS: List[str] = []
 
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
