@@ -30,7 +30,7 @@ print("imported & ready to init")
 
 TOKEN = os.environ["TOKEN"] if not TOKEN_PATH.exists(
 ) else TOKEN_PATH.read_text()
-URL = "https://count.rboud.ml//api/"
+URL = "http://127.0.0.1:8000/api/"
 
 
 def get_all_users() -> List[int]:
