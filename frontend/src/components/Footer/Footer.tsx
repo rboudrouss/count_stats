@@ -17,7 +17,7 @@ const Footer = () => {
                     </a>
                 </li>
                 <li className="social-list__item">
-                    <a className="social-list__link" href="https://rboud.ml" target="_blank">
+                    <a className="social-list__link" href="https://rboud.com" target="_blank">
                         <PublicIcon color="inherit" />
                     </a>
                 </li>
